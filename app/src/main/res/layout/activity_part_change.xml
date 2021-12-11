@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.PartChangeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarOption3"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="5dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarOption3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:menu="@menu/menu_option_1"
+            app:navigationIcon="@drawable/ic_back_ios"
+            app:navigationIconTint="@android:color/holo_blue_light">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:text="Lịch sử"
+                android:textColor="@android:color/holo_blue_light" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPartChange"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_timeline" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="32dp"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:text="Lọc"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:backgroundTint="@android:color/holo_blue_light"
+        app:cornerRadius="16dp"
+        app:icon="@drawable/ic_filter_blue_light"
+        app:iconTint="@color/white"
+        app:rippleColor="@color/design_default_color_primary_variant" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

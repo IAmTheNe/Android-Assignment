@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Driver Assistant</string>
+    <string name="facebook_app_id">468011431426565</string>
+    <string name="fb_login_protocol_scheme">fb468011431426565</string>
+    <string name="openDrawerContentDesRes">Open Navigation Drawer</string>
+    <string name="closeDrawerContentDesRes">Close Navigation Drawer</string>
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_report">Báo cáo</string>
+    <string name="nav_notification">Thông báo</string>
+    <string name="nav_profile">Đăng xuất</string>
+    <string name="not_null">Không được để trống!</string>
+    <string name="hello">Xin chào,</string>
+    <string name="add_new_car_message">Bổ sung thêm xe của bạn để có thể dễ dàng quản lý hơn</string>
+</resources>
