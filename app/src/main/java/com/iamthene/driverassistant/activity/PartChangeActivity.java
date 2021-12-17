@@ -45,9 +45,7 @@ public class PartChangeActivity extends AppCompatActivity implements Toolbar.OnM
         toolbar = findViewById(R.id.toolbarOption3);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationOnClickListener(view -> {
-            Intent intent = new Intent(PartChangeActivity.this, DashboardActivity.class);
-            startActivity(intent);
-            finishAffinity();
+            finish();
         });
     }
 

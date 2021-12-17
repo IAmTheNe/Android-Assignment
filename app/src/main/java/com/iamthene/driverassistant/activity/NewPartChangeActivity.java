@@ -2,7 +2,6 @@ package com.iamthene.driverassistant.activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.textfield.TextInputLayout;
 import com.iamthene.driverassistant.R;
 
 import java.text.SimpleDateFormat;
@@ -37,9 +35,7 @@ public class NewPartChangeActivity extends AppCompatActivity implements Toolbar.
         toolbar = findViewById(R.id.toolbarOption3);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationOnClickListener(view -> {
-            Intent intent = new Intent(NewPartChangeActivity.this, PartChangeActivity.class);
-            startActivity(intent);
-            finishAffinity();
+            finish();
         });
 
         etDateRepair = findViewById(R.id.etDateRepair);
