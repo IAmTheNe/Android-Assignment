@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.activity.PartChangeActivity;
+import com.iamthene.driverassistant.activity.RepairActivity;
 import com.iamthene.driverassistant.presenter.UserManagerPresenter;
 
 public class HomeFragment extends Fragment {
@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
 
     private void setEvent() {
         cvLinhKien.setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), PartChangeActivity.class);
+            Intent intent = new Intent(getActivity(), RepairActivity.class);
             startActivity(intent);
         });
     }

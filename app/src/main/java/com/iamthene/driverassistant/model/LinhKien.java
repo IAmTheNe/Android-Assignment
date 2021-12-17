@@ -2,12 +2,13 @@ package com.iamthene.driverassistant.model;
 
 import android.text.TextUtils;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class LinhKien {
+public class LinhKien implements Serializable {
     private String carId;
     private String date;
     private String time;

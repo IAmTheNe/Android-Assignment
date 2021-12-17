@@ -2,6 +2,7 @@ package com.iamthene.driverassistant.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,9 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.User;
 import com.iamthene.driverassistant.presenter.RegisterInterface;
@@ -23,6 +31,9 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
     Button btnCreateNewAccount;
     ProgressDialog progressDialog;
     RegisterPresenter mRegisterPresenter;
+    SharedPreferences sharedPreferences;
+    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference _myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +72,10 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
         if (!user.isEmptyUser()) {
             progressDialog.setMessage("Đang tạo tài khoản!");
             progressDialog.show();
+            sharedPreferences = getSharedPreferences("DataUser", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("fullName", user.getFirstName().concat(" ").concat(user.getLastName()));
+            editor.apply();
         }
         mRegisterPresenter.register(user);
     }
@@ -138,9 +153,28 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
     @Override
     public void registerSuccess() {
         progressDialog.dismiss();
-        Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
-        startActivity(intent);
-        finishAffinity();
+        _myRef = mDatabase.getReference("OwnerCar");
+        _myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String uuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                if (!snapshot.hasChild(uuid)) {
+                    Intent intent = new Intent(SignUpActivity.this, NewCarActivity.class);
+                    startActivity(intent);
+                    finishAffinity();
+                } else {
+                    Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
+                    startActivity(intent);
+                    finishAffinity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     @Override

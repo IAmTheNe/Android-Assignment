@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DriverAssistant">
         <activity
-            android:name=".activity.NewPartChangeActivity"
+            android:name=".activity.NewRepairActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.PartChangeActivity"
+            android:name=".activity.RepairActivity"
             android:exported="false" />
         <activity
             android:name=".activity.NewCarActivity"
