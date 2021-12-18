@@ -1,5 +1,6 @@
 package com.iamthene.driverassistant.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,11 @@ public class NewCarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_car);
         inIt();
+
+        btnCreate.setOnClickListener(v -> {
+            Intent intent = new Intent(NewCarActivity.this, DashboardActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void inIt() {
