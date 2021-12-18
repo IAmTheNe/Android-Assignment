@@ -38,7 +38,7 @@ public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_part_change);
+        setContentView(R.layout.activity_repair);
 
         inIt();
         getData();
