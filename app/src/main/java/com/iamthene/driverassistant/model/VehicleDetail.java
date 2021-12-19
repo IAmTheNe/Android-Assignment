@@ -1,5 +1,7 @@
 package com.iamthene.driverassistant.model;
 
+import android.text.TextUtils;
+
 public class VehicleDetail {
     private int no;
     private String name;
@@ -9,15 +11,6 @@ public class VehicleDetail {
     private Vehicle type;
 
     public VehicleDetail() {
-    }
-
-    public VehicleDetail(int no, String name, String number, int currentKM, String brand, Vehicle type) {
-        this.no = no;
-        this.name = name;
-        this.number = number;
-        this.currentKM = currentKM;
-        this.brand = brand;
-        this.type = type;
     }
 
     public int getNo() {
@@ -66,5 +59,21 @@ public class VehicleDetail {
 
     public void setType(Vehicle type) {
         this.type = type;
+    }
+
+    public boolean isVehicleName() {
+        return TextUtils.isEmpty(name);
+    }
+
+    public boolean isEmptyPlate() {
+        return TextUtils.isEmpty(number);
+    }
+
+    public boolean isEmptyBrand() {
+        return TextUtils.isEmpty(brand);
+    }
+
+    public boolean isEmptyInput() {
+        return isVehicleName() || isEmptyBrand() || isEmptyPlate();
     }
 }

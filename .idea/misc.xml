@@ -29,6 +29,7 @@
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/layout/activity_new_car.xml" value="0.22" />
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/layout/activity_new_part_change.xml" value="0.22" />
+        <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/layout/activity_new_repair.xml" value="0.16666666666666666" />
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/layout/activity_part_change.xml" value="0.22" />
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/layout/activity_part_change_v2.xml" value="0.22" />
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/layout/activity_prepare.xml" value="0.1" />
@@ -56,9 +57,16 @@
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/mipmap-anydpi-v26/ic_google.xml" value="0.17395833333333333" />
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/mipmap-anydpi-v26/ic_google_round.xml" value="0.1" />
         <entry key="..\:/3rd-Year/Semester-1/Mobile-Apps-Development/Project/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17395833333333333" />
+<<<<<<< HEAD
         <entry key="..\:/Android/Android-Assignment/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Android/Android-Assignment/app/src/main/res/layout/activity_login_v2.xml" value="0.16259057971014493" />
         <entry key="..\:/Android/Android-Assignment/app/src/main/res/layout/activity_profile.xml" value="0.264" />
+=======
+        <entry key="..\:/Study/3rd-Year/Android-Assignment/app/src/main/res/layout/activity_detail_refuel.xml" value="0.25416666666666665" />
+        <entry key="..\:/Study/3rd-Year/Android-Assignment/app/src/main/res/layout/activity_new_refuel.xml" value="0.25416666666666665" />
+        <entry key="..\:/Study/3rd-Year/Android-Assignment/app/src/main/res/layout/activity_refuel.xml" value="0.25416666666666665" />
+        <entry key="..\:/Study/3rd-Year/Android-Assignment/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+>>>>>>> 579e10bbf4be4200b90660faa926aa0fcc7d50c2
       </map>
     </option>
   </component>

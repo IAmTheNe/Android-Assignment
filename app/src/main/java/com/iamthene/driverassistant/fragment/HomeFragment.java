@@ -21,11 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.activity.ProfileActivity;
+import com.iamthene.driverassistant.activity.RefuelActivity;
 import com.iamthene.driverassistant.activity.RepairActivity;
 import com.iamthene.driverassistant.presenter.UserManagerPresenter;
 
 public class HomeFragment extends Fragment {
-    CardView cvLinhKien;
+    CardView cvLinhKien, cvDoXang;
     UserManagerPresenter userManagerPresenter;
     TextView tvYourName;
     ImageView civAvatar;
@@ -44,8 +45,17 @@ public class HomeFragment extends Fragment {
         getInfo();
     }
 
+    private void getInfo() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("DataUser", Context.MODE_PRIVATE);
+        tvYourName.setText(sharedPreferences.getString("fullName", "Người dùng"));
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        Uri photo = user.getPhotoUrl();
+        Glide.with(this).load(photo).error(R.drawable.no_avatar).into(civAvatar);
+    }
+
     private void inIt(View view) {
         cvLinhKien = view.findViewById(R.id.cvThayLinhKien);
+        cvDoXang = view.findViewById(R.id.cvDoXang);
         tvYourName = view.findViewById(R.id.tvYourName);
         civAvatar = view.findViewById(R.id.civAvatar);
         userManagerPresenter = new UserManagerPresenter();
@@ -57,17 +67,16 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
+
         civAvatar.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), ProfileActivity.class);
             startActivity(intent);
         });
-    }
 
-    private void getInfo() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("DataUser", Context.MODE_PRIVATE);
-        tvYourName.setText(sharedPreferences.getString("fullName", "Người dùng"));
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Uri photo = user.getPhotoUrl();
-        Glide.with(this).load(photo).error(R.drawable.no_avatar).into(civAvatar);
+        cvDoXang.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), RefuelActivity.class);
+
+            startActivity(intent);
+        });
     }
 }
