@@ -157,16 +157,9 @@ public class SignUpActivity extends AppCompatActivity implements RegisterInterfa
         _myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String uuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                if (!snapshot.hasChild(uuid)) {
-                    Intent intent = new Intent(SignUpActivity.this, NewCarActivity.class);
-                    startActivity(intent);
-                    finishAffinity();
-                } else {
-                    Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
-                    startActivity(intent);
-                    finishAffinity();
-                }
+                Intent intent = new Intent(SignUpActivity.this, NewCarActivity.class);
+                startActivity(intent);
+                finishAffinity();
             }
 
             @Override

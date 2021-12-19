@@ -73,7 +73,15 @@ public class VehicleDetail {
         return TextUtils.isEmpty(brand);
     }
 
+    public boolean isEmptyKM() {
+        return TextUtils.isEmpty(String.valueOf(currentKM));
+    }
+
+    public boolean isEmptyCarType() {
+        return type == null;
+    }
+
     public boolean isEmptyInput() {
-        return isVehicleName() || isEmptyBrand() || isEmptyPlate();
+        return isVehicleName() || isEmptyBrand() || isEmptyPlate() || isEmptyKM() || isEmptyCarType();
     }
 }

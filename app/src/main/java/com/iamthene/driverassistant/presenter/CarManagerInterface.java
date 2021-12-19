@@ -1,8 +1,11 @@
 package com.iamthene.driverassistant.presenter;
 
+import com.iamthene.driverassistant.model.VehicleDetail;
+
 public interface CarManagerInterface {
-    public interface AddCar {
+    interface AddCar {
         void addSuccess();
-        void addError();
+
+        void addError(VehicleDetail v);
     }
 }
