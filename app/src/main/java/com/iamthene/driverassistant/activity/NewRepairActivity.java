@@ -23,6 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.LinhKien;
 import com.iamthene.driverassistant.model.Vehicle;
+import com.iamthene.driverassistant.model.VehicleDetail;
+import com.iamthene.driverassistant.presenter.CarManagerInterface;
+import com.iamthene.driverassistant.presenter.CarPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,14 +33,17 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
-public class NewRepairActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public class NewRepairActivity extends AppCompatActivity
+        implements Toolbar.OnMenuItemClickListener, CarManagerInterface.AddCar {
     MaterialToolbar toolbar;
     EditText etDateRepair, etTimeRepair, etPartRepaired, etPriceRepair;
     MaterialAutoCompleteTextView etCarNameOption3;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference _mRef;
-    List<Vehicle> lstVehicle;
-    ArrayAdapter<Vehicle> adapter;
+    List<VehicleDetail> lstVehicle;
+    ArrayAdapter<VehicleDetail> adapter;
+    CarPresenter mCarPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,7 @@ public class NewRepairActivity extends AppCompatActivity implements Toolbar.OnMe
         etPartRepaired = findViewById(R.id.etPartRepaired);
         etPriceRepair = findViewById(R.id.etPriceRepair);
         etCarNameOption3 = findViewById(R.id.etCarNameOption3);
+        mCarPresenter = new CarPresenter(this);
     }
 
     @Override
@@ -127,30 +134,19 @@ public class NewRepairActivity extends AppCompatActivity implements Toolbar.OnMe
     }
 
     private void getCar() {
-        lstVehicle = new ArrayList<>();
-        _mRef = mDatabase.getReference("Vehicles");
-        _mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (lstVehicle != null) {
-                    lstVehicle.clear();
-                }
-
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    Vehicle v = ds.getValue(Vehicle.class);
-                    lstVehicle.add(v);
-                }
-
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        lstVehicle = mCarPresenter.getOwnerCar();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, lstVehicle);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         etCarNameOption3.setAdapter(adapter);
+    }
+
+    @Override
+    public void addSuccess() {
+
+    }
+
+    @Override
+    public void addError(VehicleDetail v) {
+
     }
 }

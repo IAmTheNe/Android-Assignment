@@ -44,6 +44,7 @@ public class LinhKienAdapter extends RecyclerView.Adapter<LinhKienAdapter.ViewHo
         holder.tvContentChangePart.setText(lk.getPart());
         holder.tvTime.setText(lk.getTime());
         holder.tvPrice.setText(lk.getPriceFormat());
+        holder.tvCarName.setText(lk.getCarId());
         holder.cvHistoryPart.setOnClickListener(view -> Toast.makeText(mContext.getApplicationContext(), lk.getContent(), Toast.LENGTH_SHORT).show());
         holder.cvHistoryPart.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -63,7 +64,7 @@ public class LinhKienAdapter extends RecyclerView.Adapter<LinhKienAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvDateChangePart, tvContentChangePart, tvTime, tvPrice;
+        TextView tvDateChangePart, tvContentChangePart, tvTime, tvPrice, tvCarName;
         RelativeLayout rlExpandOption3;
         CardView cvHistoryPart;
 
@@ -74,6 +75,7 @@ public class LinhKienAdapter extends RecyclerView.Adapter<LinhKienAdapter.ViewHo
             cvHistoryPart = itemView.findViewById(R.id.cvHistoryPart);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvPrice = itemView.findViewById(R.id.tvPrice);
+            tvCarName = itemView.findViewById(R.id.tvCarName);
         }
     }
 

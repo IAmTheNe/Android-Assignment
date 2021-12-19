@@ -19,14 +19,6 @@ public class LinhKien implements Serializable {
     public LinhKien() {
     }
 
-    public LinhKien(String carId, String date, String time, String part, int price) {
-        this.carId = carId;
-        this.date = date;
-        this.time = time;
-        this.part = part;
-        this.price = price;
-    }
-
     public String getCarId() {
         return carId;
     }
@@ -87,18 +79,5 @@ public class LinhKien implements Serializable {
         NumberFormat dongFormat = NumberFormat.getCurrencyInstance(new Locale("vi"));
         dongFormat.setMaximumFractionDigits(0);
         return dongFormat.format(getPrice());
-    }
-
-    public static List<LinhKien> init() {
-        List<LinhKien> lstLK = new ArrayList<>();
-        lstLK.add(new LinhKien("1", "25/11/2021", "23:11", "Tay đông", 500000));
-        lstLK.add(new LinhKien("2", "26/11/2021", "23:11", "Tay đông", 250000));
-        lstLK.add(new LinhKien("3", "27/11/2021", "23:11", "Tay đông", 90000));
-        lstLK.add(new LinhKien("4", "28/11/2021", "23:11", "Tay đông", 150000));
-        lstLK.add(new LinhKien("5", "29/11/2021", "23:11", "Tay đông", 100000));
-        lstLK.add(new LinhKien("6", "1/12/2021", "23:11", "Tay đông", 300000));
-        lstLK.add(new LinhKien("7", "4/12/2021", "23:11", "Tay đông", 900000));
-        lstLK.add(new LinhKien("8", "10/12/2021", "23:11", "Tay đông", 1500000));
-        return lstLK;
     }
 }

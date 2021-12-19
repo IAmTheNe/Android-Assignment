@@ -13,7 +13,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.Vehicle;
 import com.iamthene.driverassistant.model.VehicleDetail;
-import com.iamthene.driverassistant.presenter.AddCarPresenter;
+import com.iamthene.driverassistant.presenter.CarPresenter;
 import com.iamthene.driverassistant.presenter.CarManagerInterface;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
     EditText etCarName, etCarPlate, etCarBrand, etCapacity, etCarKM;
     AutoCompleteTextView etCarType;
     Button btnCreate;
-    AddCarPresenter mAddCarPresenter;
+    CarPresenter mCarPresenter;
     TextInputLayout tilCarName, tilCarType, tilCarBrand, tilCapacity, tilCarKM, tilCarPlate;
     int positionVehicle = 0;
 
@@ -47,7 +47,7 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
 
         etCarType.setOnItemClickListener((parent, view, position, id) -> positionVehicle = position);
         vehicle.setType((Vehicle) etCarType.getAdapter().getItem(positionVehicle));
-        mAddCarPresenter.addCar(vehicle);
+        mCarPresenter.addCar(vehicle);
 
     }
 
@@ -65,7 +65,7 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
         tilCarKM = findViewById(R.id.tilCarKM);
         tilCarType = findViewById(R.id.tilCarType);
         tilCarPlate = findViewById(R.id.tilCarPlate);
-        mAddCarPresenter = new AddCarPresenter(this);
+        mCarPresenter = new CarPresenter(this);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
     }
 
     private void getCar() {
-        List<Vehicle> lstVehicle = mAddCarPresenter.getCar();
+        List<Vehicle> lstVehicle = mCarPresenter.getCar();
         ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, lstVehicle);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);

@@ -2,6 +2,8 @@ package com.iamthene.driverassistant.model;
 
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 public class VehicleDetail {
     private int no;
     private String name;
@@ -83,5 +85,11 @@ public class VehicleDetail {
 
     public boolean isEmptyInput() {
         return isVehicleName() || isEmptyBrand() || isEmptyPlate() || isEmptyKM() || isEmptyCarType();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }
