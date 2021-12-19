@@ -20,11 +20,12 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.iamthene.driverassistant.R;
+import com.iamthene.driverassistant.activity.RefuelActivity;
 import com.iamthene.driverassistant.activity.RepairActivity;
 import com.iamthene.driverassistant.presenter.UserManagerPresenter;
 
 public class HomeFragment extends Fragment {
-    CardView cvLinhKien;
+    CardView cvLinhKien, cvDoXang;
     UserManagerPresenter userManagerPresenter;
     TextView tvYourName;
     ImageView civAvatar;
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment {
 
     private void inIt(View view) {
         cvLinhKien = view.findViewById(R.id.cvThayLinhKien);
+        cvDoXang = view.findViewById(R.id.cvDoXang);
         tvYourName = view.findViewById(R.id.tvYourName);
         civAvatar = view.findViewById(R.id.civAvatar);
         userManagerPresenter = new UserManagerPresenter();
@@ -53,6 +55,11 @@ public class HomeFragment extends Fragment {
     private void setEvent() {
         cvLinhKien.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), RepairActivity.class);
+            startActivity(intent);
+        });
+
+        cvDoXang.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), RefuelActivity.class);
             startActivity(intent);
         });
     }
