@@ -1,11 +1,14 @@
 package com.iamthene.driverassistant.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
     Button btnLogin;
     ImageView fabGoogle;
     LinearLayout lySignUp;
+    LinearLayout lyForgotPassword;
     ProgressDialog dialog;
     GoogleSignInClient mGoogleSignInClient;
     LoginPresenter mLoginPresenter;
@@ -78,8 +83,12 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
             startActivityForResult(intent, RC_SIGN_IN);
         });
 
-    }
+        // Forgot Password
+        lyForgotPassword.setOnClickListener(view -> {
+            onClickforGotPassword();
+        });
 
+    }
 
     private void validate() {
         etUsername.addTextChangedListener(new TextWatcher() {
@@ -127,6 +136,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
         btnLogin = findViewById(R.id.btnLoginTest);
         fabGoogle = findViewById(R.id.fabGoogle);
         lySignUp = findViewById(R.id.lySignUpTest);
+        lyForgotPassword = findViewById(R.id.lyForgotPassword);
         dialog = new ProgressDialog(this);
         mLoginPresenter = new LoginPresenter(this);
     }
@@ -249,5 +259,24 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
     public void loginErrorMessage() {
         dialog.dismiss();
         Toast.makeText(LoginActivity.this, "Tài khoản hoặc mật khẩu không chính xác!", Toast.LENGTH_SHORT).show();
+    }
+
+    //@Override
+    private void onClickforGotPassword(){
+        dialog.setMessage("Mật khẩu đang được gửi đến gmail của bạn...!");
+        dialog.show();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String emailAddress = "nhtuongvy201@gmail.com";
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        dialog.dismiss();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

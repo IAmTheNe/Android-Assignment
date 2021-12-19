@@ -109,7 +109,6 @@
                 android:layout_below="@id/btnLoginTest"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="16dp"
                 android:gravity="center"
                 android:padding="5dp">
 
@@ -126,7 +125,29 @@
                     android:layout_marginStart="5dp"
                     android:text="Đăng ký ngay"
                     android:textColor="#2196F3" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lyForgotPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lySignUpTest"
+                android:layout_marginHorizontal="32dp"
+                android:gravity="center"
+                android:padding="5dp">
 
+                <TextView
+                    android:id="@+id/tvText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quên mật khẩu?" />
+
+                <TextView
+                    android:id="@+id/tvLayLaiMK"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Lấy lại mật khẩu"
+                    android:textColor="#2196F3" />
             </LinearLayout>
         </RelativeLayout>
 
