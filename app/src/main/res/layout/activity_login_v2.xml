@@ -126,6 +126,7 @@
                     android:text="Đăng ký ngay"
                     android:textColor="#2196F3" />
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/lyForgotPassword"
                 android:layout_width="match_parent"
