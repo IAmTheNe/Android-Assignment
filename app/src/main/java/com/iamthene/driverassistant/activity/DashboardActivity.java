@@ -20,6 +20,7 @@ public class DashboardActivity extends AppCompatActivity {
     BottomNavigationView mBottomNavigationView;
     ProgressDialog progressDialog;
 
+    // private static final int MY_REQUEST_CODE = 10;
     private static final int FRAG_HISTORY = 0;
     private static final int FRAG_REPORT = 1;
     private static final int FRAG_ALARM = 2;
@@ -88,4 +89,5 @@ public class DashboardActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         mBottomNavigationView = findViewById(R.id.nav_bottom_view);
     }
+
 }

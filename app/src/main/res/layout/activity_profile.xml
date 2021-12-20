@@ -107,14 +107,28 @@
         </TableRow>
     </TableLayout>
 
-
-    <Button
-        android:id="@+id/btnDangXuat"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="#AD44AE77"
-        android:text="Đăng xuất" />
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="20dp">
+        <Button
+            android:id="@+id/btnCapNhat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="70dp"
+            android:backgroundTint="#AD44AE77"
+            android:text="Cập nhật" />
+        <Button
+            android:id="@+id/btnDangXuat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="#AD44AE77"
+            android:text="Đăng xuất" />
+
+    </LinearLayout>
 
 </LinearLayout>
