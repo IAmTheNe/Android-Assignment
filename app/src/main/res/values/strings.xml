@@ -11,4 +11,5 @@
     <string name="not_null">Không được để trống!</string>
     <string name="hello">Xin chào,</string>
     <string name="add_new_car_message">Bổ sung thêm xe của bạn để có thể dễ dàng quản lý hơn</string>
+    <string name="empty_list">Hiện tại bạn chưa có ghi chú nào!</string>
 </resources>
