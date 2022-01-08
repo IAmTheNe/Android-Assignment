@@ -12,15 +12,8 @@
     <string name="hello">Xin chào,</string>
 
     <string name="add_new_car_message">Bổ sung thêm xe của bạn để có thể dễ dàng quản lý hơn</string>
-<<<<<<< HEAD
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="empty_list">Hiện tại bạn chưa có ghi chú nào!</string>
-=======
-
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="empty_list">Hiện tại bạn chưa có ghi chú nào!</string>
 
->>>>>>> 1356ff3640f9284a5a942c51af984a6df2d97bba
 </resources>
