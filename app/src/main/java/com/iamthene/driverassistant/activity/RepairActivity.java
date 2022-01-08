@@ -18,7 +18,7 @@ import com.iamthene.driverassistant.fragment.RepairFragment;
 import com.iamthene.driverassistant.presenter.RepairInterface;
 import com.iamthene.driverassistant.presenter.RepairPresenter;
 
-public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, RepairInterface.GetRepairList {
+public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, RepairInterface.OnCheckEmptyList {
     MaterialToolbar toolbar;
     FrameLayout frlContent;
     RepairPresenter mPresenter;
@@ -59,16 +59,16 @@ public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuI
     }
 
     private void initEvent() {
-        mPresenter.fragmentTransactions();
+        mPresenter.isEmptyList();
     }
 
     @Override
-    public void onSuccess() {
+    public void empty() {
         replaceFragment(new EmptyFragment());
     }
 
     @Override
-    public void onFail() {
+    public void exists() {
         replaceFragment(new RepairFragment());
     }
 

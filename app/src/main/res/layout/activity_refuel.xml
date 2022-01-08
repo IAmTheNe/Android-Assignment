@@ -7,37 +7,36 @@
     android:orientation="vertical"
     tools:context=".activity.RefuelActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarOption3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:background="@drawable/custom_card_item1"
-        android:orientation="horizontal">
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="5dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:text="Lịch sử đổ xăng"
-            android:textSize="30dp"
-            android:textColor="@color/white"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:menu="@menu/menu_option_1"
+            app:navigationIcon="@drawable/ic_back_ios"
+            app:navigationIconTint="@android:color/holo_blue_light">
 
-        <ImageButton
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_gravity="center"
-            android:id="@+id/imgBtnAdd"
-            android:background="@drawable/custom_card_item1"
-            android:src="@drawable/ic_add" />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:text="Lịch sử"
+                android:textColor="@android:color/holo_blue_light" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </LinearLayout>>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
+        android:id="@+id/frlContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rvRefuel"/>
+        android:layout_height="match_parent" />
 
 
 </LinearLayout>
