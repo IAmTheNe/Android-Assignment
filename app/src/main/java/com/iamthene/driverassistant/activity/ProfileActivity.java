@@ -1,18 +1,6 @@
 package com.iamthene.driverassistant.activity;
 
-import static android.app.PendingIntent.getActivity;
-import static android.content.ContentValues.TAG;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,29 +10,26 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.fragment.HomeFragment;
 
 import java.io.IOException;
 
@@ -56,10 +41,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     private CircleImageView img_AVT;
     public EditText edtFirstName, edtLastName, edtEmail;
-    private Button btnOk;
+    private Button btnOk, btnThietLap;
     ActivityResultLauncher<Intent> mActivityResultLauncher;
-    private DataSnapshot snapshot;
-    private Uri mUri;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
         showUserInfo();
         getInfo();
 
-        ProfileActivity mProfileActivity = new ProfileActivity();
         mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -101,6 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         edtLastName = findViewById(R.id.edtLastName);
         edtEmail = findViewById(R.id.edtEmail);
         btnOk = findViewById(R.id.btnOk);
+        btnThietLap = findViewById(R.id.btnThietLap);
     }
 
     public void setUserInfo() {
@@ -134,18 +118,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        img_AVT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickRequestPermission();
-            }
-        });
+        img_AVT.setOnClickListener(view -> onClickRequestPermission());
 
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
+        btnOk.setOnClickListener(view -> finish());
+
+        btnThietLap.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ListCarActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -165,7 +144,8 @@ public class ProfileActivity extends AppCompatActivity {
     public void setBitmapImageView(Bitmap bitmapImageView) {
         img_AVT.setImageBitmap(bitmapImageView);
     }
-    public void setUri(Uri uri){
+
+    public void setUri(Uri uri) {
         Uri mUri;
     }
 
@@ -192,18 +172,21 @@ public class ProfileActivity extends AppCompatActivity {
                 edtEmail.setText(email);
                 Glide.with(ProfileActivity.this).load(user.getPhotoUrl()).error(R.drawable.no_avatar).into(img_AVT);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
     }
+
     private void getInfo() {
         SharedPreferences sharedPreferences = getSharedPreferences("DataUser", Context.MODE_PRIVATE);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Uri photo = user.getPhotoUrl();
         Glide.with(this).load(photo).error(R.drawable.no_avatar).into(img_AVT);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

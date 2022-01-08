@@ -34,7 +34,6 @@ public class RefuelPresenter {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         Refuel r = ds.getValue(Refuel.class);
                         lstRefuel.add(r);
-
                     }
 
                     if (lstRefuel.isEmpty()) {
