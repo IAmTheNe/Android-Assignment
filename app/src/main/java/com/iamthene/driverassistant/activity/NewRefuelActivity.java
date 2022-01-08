@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
@@ -14,6 +16,7 @@ import com.iamthene.driverassistant.model.Refuel;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class NewRefuelActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -67,10 +70,13 @@ public class NewRefuelActivity extends AppCompatActivity {
         p.setDistance(etKm.getText().toString());
         p.setExpDistance(etDk.getText().toString());
 
-        myRef = database.getReference("Refuel");
-        String id = myRef.push().getKey();
-        p.setId(id);
-        myRef.child(id).setValue(p);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            myRef = database.getReference("Refuel");
+            String keys = Objects.requireNonNull(myRef.push().getKey());
+            myRef.child(user.getUid()).child(keys).setValue(p);
+        }
     }
 
     public void init() {
