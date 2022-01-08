@@ -3,37 +3,37 @@ package com.iamthene.driverassistant.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.adapter.LinhKienAdapter;
+import com.iamthene.driverassistant.fragment.EmptyFragment;
+import com.iamthene.driverassistant.fragment.RepairFragment;
 import com.iamthene.driverassistant.model.LinhKien;
+import com.iamthene.driverassistant.presenter.CarPresenter;
+import com.iamthene.driverassistant.presenter.RepairInterface;
+import com.iamthene.driverassistant.presenter.RepairPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
-    RecyclerView rvPartChange;
+public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, RepairInterface.GetRepairList {
     MaterialToolbar toolbar;
-    LinhKienAdapter adapter;
-    List<LinhKien> lstLK;
-    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference _myRef;
-    ArrayList<String> mKeys = new ArrayList<>();
+    FrameLayout frlContent;
+    RepairPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +41,17 @@ public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuI
         setContentView(R.layout.activity_repair);
 
         inIt();
-        getData();
-        adapter = new LinhKienAdapter(this, lstLK);
-        rvPartChange.setAdapter(adapter);
+        initEvent();
     }
 
     private void inIt() {
-        rvPartChange = findViewById(R.id.rvPartChange);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvPartChange.setLayoutManager(linearLayoutManager);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-
+        frlContent = findViewById(R.id.frlContent);
         toolbar = findViewById(R.id.toolbarOption3);
         toolbar.setOnMenuItemClickListener(this);
         toolbar.setNavigationOnClickListener(view -> {
             finish();
         });
+        mPresenter = new RepairPresenter(this);
     }
 
     @Override
@@ -67,63 +61,31 @@ public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuI
             Intent intent = new Intent(this, NewRepairActivity.class);
             startActivity(intent);
         }
-
         return false;
     }
 
-    private void getData() {
-        lstLK = new ArrayList<>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frlContent, fragment);
+        transaction.commitAllowingStateLoss();
+    }
 
-        _myRef = mDatabase.getReference("Repair");
-        assert user != null;
-        _myRef.child(user.getUid()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                LinhKien linhKien = snapshot.getValue(LinhKien.class);
-                if (linhKien != null) {
-                    lstLK.add(linhKien);
-                    mKeys.add(snapshot.getKey());
-                    adapter.notifyDataSetChanged();
-                }
-            }
+    private void initEvent() {
+        mPresenter.fragmentTransactions();
+    }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                LinhKien linhKien = snapshot.getValue(LinhKien.class);
-                if (linhKien == null || lstLK == null || lstLK.isEmpty()) {
-                    return;
-                }
-                String key = snapshot.getKey();
-                int index = mKeys.indexOf(key);
-                lstLK.set(index, linhKien);
-                adapter.notifyDataSetChanged();
-            }
+    @Override
+    public void onSuccess() {
+        replaceFragment(new EmptyFragment());
+    }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                LinhKien linhKien = snapshot.getValue(LinhKien.class);
-                if (linhKien == null || lstLK == null || lstLK.isEmpty()) {
-                    return;
-                }
-                String key = snapshot.getKey();
-                int index = mKeys.indexOf(key);
-                if (index != -1) {
-                    lstLK.remove(index);
-                    mKeys.remove(index);
-                }
-                adapter.notifyDataSetChanged();
-            }
+    @Override
+    public void onFail() {
+        replaceFragment(new RepairFragment());
+    }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }

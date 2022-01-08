@@ -31,8 +31,7 @@ public class RefuelAdapter extends RecyclerView.Adapter<RefuelAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_refuel, parent, false);
-        ViewHolder holder = new ViewHolder(v);
-        return holder;
+        return new ViewHolder(v);
     }
 
     @Override
@@ -43,12 +42,7 @@ public class RefuelAdapter extends RecyclerView.Adapter<RefuelAdapter.ViewHolder
         holder.tvFuel.setText(p.getFuel());
         holder.tvFee.setText(p.getFee());
         holder.tvDate.setText(p.getTime());
-        holder.item_refuel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickDetail(p);
-            }
-        });
+        holder.item_refuel.setOnClickListener(v -> onClickDetail(p));
     }
 
     private void onClickDetail(Refuel p) {

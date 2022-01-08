@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,8 +58,11 @@ public class RefuelActivity extends AppCompatActivity {
 
     private void getData() {
         lstRefuel = new ArrayList<>();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         myRef = database.getReference("Refuel");
-        myRef.addChildEventListener(new ChildEventListener() {
+        assert user != null;
+        myRef.child(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Refuel p = snapshot.getValue(Refuel.class);

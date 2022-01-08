@@ -67,8 +67,6 @@ public class CarPresenter {
 
     public List<VehicleDetail> getOwnerCar() {
         List<VehicleDetail> yourCar = new ArrayList<>();
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference _myRef = mDatabase.getReference("ListCars");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();

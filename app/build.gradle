@@ -60,4 +60,7 @@ dependencies {
     // Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
+    // Weather
+    implementation 'com.loopj.android:android-async-http:1.4.11'
+
 }
