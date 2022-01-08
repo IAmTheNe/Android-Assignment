@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -20,16 +19,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.adapter.LinhKienAdapter;
-import com.iamthene.driverassistant.model.LinhKien;
+import com.iamthene.driverassistant.adapter.RepairAdapter;
+import com.iamthene.driverassistant.model.Repair;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RepairFragment extends Fragment {
     RecyclerView rvPartChange;
-    LinhKienAdapter adapter;
-    List<LinhKien> lstLK;
+    RepairAdapter adapter;
+    List<Repair> lstLK;
     FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     DatabaseReference _myRef;
     ArrayList<String> mKeys = new ArrayList<>();
@@ -45,7 +44,7 @@ public class RepairFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         inIt(view);
         getData();
-        adapter = new LinhKienAdapter(getActivity(), lstLK);
+        adapter = new RepairAdapter(getActivity(), lstLK);
         rvPartChange.setAdapter(adapter);
     }
 
@@ -58,9 +57,9 @@ public class RepairFragment extends Fragment {
         _myRef.child(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                LinhKien linhKien = snapshot.getValue(LinhKien.class);
-                if (linhKien != null) {
-                    lstLK.add(linhKien);
+                Repair repair = snapshot.getValue(Repair.class);
+                if (repair != null) {
+                    lstLK.add(repair);
                     mKeys.add(snapshot.getKey());
                     adapter.notifyDataSetChanged();
                 }
@@ -68,20 +67,20 @@ public class RepairFragment extends Fragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                LinhKien linhKien = snapshot.getValue(LinhKien.class);
-                if (linhKien == null || lstLK == null || lstLK.isEmpty()) {
+                Repair repair = snapshot.getValue(Repair.class);
+                if (repair == null || lstLK == null || lstLK.isEmpty()) {
                     return;
                 }
                 String key = snapshot.getKey();
                 int index = mKeys.indexOf(key);
-                lstLK.set(index, linhKien);
+                lstLK.set(index, repair);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                LinhKien linhKien = snapshot.getValue(LinhKien.class);
-                if (linhKien == null || lstLK == null || lstLK.isEmpty()) {
+                Repair repair = snapshot.getValue(Repair.class);
+                if (repair == null || lstLK == null || lstLK.isEmpty()) {
                     return;
                 }
                 String key = snapshot.getKey();

@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class LinhKien implements Serializable {
+public class Repair implements Serializable {
+    private String id;
     private String carId;
     private String date;
     private String time;
@@ -16,7 +17,15 @@ public class LinhKien implements Serializable {
     private int price;
 
 
-    public LinhKien() {
+    public Repair() {
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCarId() {

@@ -1,29 +1,33 @@
 package com.iamthene.driverassistant.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.model.LinhKien;
+import com.iamthene.driverassistant.model.Repair;
 
 import java.util.List;
 
-public class LinhKienAdapter extends RecyclerView.Adapter<LinhKienAdapter.ViewHolder> {
-    private List<LinhKien> lstLinhKien;
+public class RepairAdapter extends RecyclerView.Adapter<RepairAdapter.ViewHolder> {
+    private List<Repair> lstRepair;
     private Context mContext;
 
-    public LinhKienAdapter(Context context, List<LinhKien> lstLinhKien) {
+    public RepairAdapter(Context context, List<Repair> lstRepair) {
         this.mContext = context;
-        this.lstLinhKien = lstLinhKien;
+        this.lstRepair = lstRepair;
     }
 
     @NonNull
@@ -36,7 +40,7 @@ public class LinhKienAdapter extends RecyclerView.Adapter<LinhKienAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        LinhKien lk = lstLinhKien.get(position);
+        Repair lk = lstRepair.get(position);
         if (lk == null) {
             return;
         }
@@ -45,19 +49,28 @@ public class LinhKienAdapter extends RecyclerView.Adapter<LinhKienAdapter.ViewHo
         holder.tvTime.setText(lk.getTime());
         holder.tvPrice.setText(lk.getPriceFormat());
         holder.tvCarName.setText(lk.getCarId());
-        holder.cvHistoryPart.setOnClickListener(view -> Toast.makeText(mContext.getApplicationContext(), lk.getContent(), Toast.LENGTH_SHORT).show());
-        holder.cvHistoryPart.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                return false;
-            }
+        holder.cvHistoryPart.setOnLongClickListener(view -> {
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Driver Assistant")
+                    .setMessage("Bạn có muốn xóa ghi chú này?")
+                    .setPositiveButton("Đồng ý", (dialog, which) -> {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Repair");
+                            mRef.child(user.getUid()).child(lk.getId()).removeValue();
+                        }
+                    })
+                    .setNegativeButton("Quay lại", null)
+                    .show();
+
+            return false;
         });
     }
 
     @Override
     public int getItemCount() {
-        if (lstLinhKien != null) {
-            return lstLinhKien.size();
+        if (lstRepair != null) {
+            return lstRepair.size();
         }
 
         return 0;

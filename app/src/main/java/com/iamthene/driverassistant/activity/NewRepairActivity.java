@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.model.LinhKien;
+import com.iamthene.driverassistant.model.Repair;
 import com.iamthene.driverassistant.model.VehicleDetail;
 import com.iamthene.driverassistant.presenter.CarManagerInterface;
 import com.iamthene.driverassistant.presenter.CarPresenter;
@@ -70,20 +70,21 @@ public class NewRepairActivity extends AppCompatActivity
     public boolean onMenuItemClick(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.mnuSave) {
-            LinhKien linhKien = new LinhKien();
-            linhKien.setDate(etDateRepair.getText().toString());
-            linhKien.setTime(etTimeRepair.getText().toString());
-            linhKien.setPart(etPartRepaired.getText().toString());
-            linhKien.setCarId(etCarNameOption3.getText().toString());
-            linhKien.setPrice(Integer.parseInt(etPriceRepair.getText().toString()));
+            Repair repair = new Repair();
+            repair.setDate(etDateRepair.getText().toString());
+            repair.setTime(etTimeRepair.getText().toString());
+            repair.setPart(etPartRepaired.getText().toString());
+            repair.setCarId(etCarNameOption3.getText().toString());
+            repair.setPrice(Integer.parseInt(etPriceRepair.getText().toString()));
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
                 _mRef = mDatabase.getReference("Repair");
-                String keys = Objects.requireNonNull(_mRef.push().getKey());
-                _mRef.child(user.getUid()).child(keys).setValue(linhKien);
+                String uid = _mRef.push().getKey();
+                repair.setId(uid);
+                String keys = Objects.requireNonNull(uid);
+                _mRef.child(user.getUid()).child(keys).setValue(repair);
             }
-
             finish();
         }
 

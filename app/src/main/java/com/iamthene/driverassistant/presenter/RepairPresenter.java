@@ -9,7 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.iamthene.driverassistant.model.LinhKien;
+import com.iamthene.driverassistant.model.Repair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class RepairPresenter {
     }
 
     public void fragmentTransactions() {
-        List<LinhKien> lstLinKien = new ArrayList<>();
+        List<Repair> lstLinKien = new ArrayList<>();
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
         DatabaseReference _myRef = mDatabase.getReference("Repair");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -34,7 +34,7 @@ public class RepairPresenter {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        LinhKien lk = ds.getValue(LinhKien.class);
+                        Repair lk = ds.getValue(Repair.class);
                         lstLinKien.add(lk);
                     }
 
