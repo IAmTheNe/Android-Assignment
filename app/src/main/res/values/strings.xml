@@ -10,5 +10,8 @@
     <string name="nav_profile">Đăng xuất</string>
     <string name="not_null">Không được để trống!</string>
     <string name="hello">Xin chào,</string>
+
     <string name="add_new_car_message">Bổ sung thêm xe của bạn để có thể dễ dàng quản lý hơn</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

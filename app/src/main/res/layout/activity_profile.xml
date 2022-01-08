@@ -1,99 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ProfileActivity"
-    android:orientation="vertical">
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".activity.ProfileActivity">
 
-    <RelativeLayout
+    <!-- TODO: Update blank fragment layout -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_AVT"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/ic_person" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/img"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_weight="2.5"
-        app:layout_constraintVertical_bias="0">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivPic"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="100dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edtLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/no_avatar" />
-    </RelativeLayout>
-    <TableLayout
-        android:id="@+id/color"
+            android:hint="Họ"
+            android:padding="10dp" />
+        <EditText
+            android:id="@+id/edtFirstName"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:hint="Tên"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="6.5"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:hint="Email"
+        android:padding="10dp" />
 
-        <TableRow>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="25dp"
-                android:layout_weight="3"
-                android:text="Họ và tên:"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edtTen"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_weight="6"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:imeOptions="actionNext"
-                android:inputType="textEmailAddress"/>
-        </TableRow>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TableRow>
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="50dp"
-                android:layout_weight="3"
-                android:text="Tên đăng nhập:"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/edtTenDN"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:layout_weight="6"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="40dp"
-                android:layout_weight="4"
-                android:text="Danh sách xe:"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_weight="3"
+                android:hint="Danh sách xe"
+                android:padding="10dp"
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/btnThietLap"
@@ -107,28 +77,12 @@
         </TableRow>
     </TableLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:layout_marginLeft="20dp">
-        <Button
-            android:id="@+id/btnCapNhat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="70dp"
-            android:backgroundTint="#AD44AE77"
-            android:text="Cập nhật" />
-        <Button
-            android:id="@+id/btnDangXuat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:backgroundTint="#AD44AE77"
-            android:text="Đăng xuất" />
-
-    </LinearLayout>
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#28A4AF"
+        android:text="Ok" />
 
 </LinearLayout>

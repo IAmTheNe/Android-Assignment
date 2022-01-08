@@ -156,7 +156,7 @@
             android:id="@+id/tvSocialLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="15dp"
             android:padding="5dp"
             android:text="Đăng nhập bằng"
             android:textSize="16sp"
@@ -165,20 +165,45 @@
             app:layout_constraintStart_toStartOf="@id/rlFirst"
             app:layout_constraintTop_toBottomOf="@id/rlFirst" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/fabGoogle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginHorizontal="32dp"
-            android:layout_marginBottom="32dp"
-            android:elevation="5dp"
-            android:src="@drawable/googleg_standard_color_18"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="@id/rlFirst"
             app:layout_constraintStart_toStartOf="@id/rlFirst"
-            app:layout_constraintTop_toBottomOf="@id/tvSocialLogin"
-            app:layout_constraintVertical_bias="0.333" />
+            app:layout_constraintTop_toBottomOf="@id/tvSocialLogin">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/fabGoogle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginBottom="32dp"
+                android:elevation="5dp"
+                android:src="@drawable/googleg_standard_color_18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@id/rlFirst"
+                app:layout_constraintTop_toBottomOf="@id/tvSocialLogin"
+                app:layout_constraintVertical_bias="0.333" />
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/fabFacebook"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginBottom="32dp"
+                android:elevation="5dp"
+                android:src="@drawable/facebook"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@id/rlFirst"
+                app:layout_constraintTop_toBottomOf="@id/fabGoogle"
+                app:layout_constraintVertical_bias="0.333" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

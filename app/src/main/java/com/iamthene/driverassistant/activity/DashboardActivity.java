@@ -1,16 +1,28 @@
 package com.iamthene.driverassistant.activity;
 
+//import static com.iamthene.driverassistant.fragment.ProfileFragment.MY_REQUEST_CODE;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.fragment.HomeFragment;
 import com.iamthene.driverassistant.fragment.NotificationFragment;
@@ -20,12 +32,10 @@ public class DashboardActivity extends AppCompatActivity {
     BottomNavigationView mBottomNavigationView;
     ProgressDialog progressDialog;
 
-    // private static final int MY_REQUEST_CODE = 10;
     private static final int FRAG_HISTORY = 0;
     private static final int FRAG_REPORT = 1;
     private static final int FRAG_ALARM = 2;
     private static final int FRAG_PROFILE = 3;
-
 
     private int mCurrentFragment = FRAG_HISTORY;
 
@@ -53,17 +63,11 @@ public class DashboardActivity extends AppCompatActivity {
                     mCurrentFragment = FRAG_REPORT;
                 }
 
-            } else if (id == R.id.nav_alarm) {
-                if (mCurrentFragment != FRAG_ALARM) {
-                    replaceFragment(new NotificationFragment());
-                    mCurrentFragment = FRAG_ALARM;
-                }
-            } else if (id == R.id.nav_profile) {
-                /*if (mCurrentFragment != FRAG_REPORT) {
-                    replaceFragment(new ProfileFragment());
+            }/* else if (id == R.id.nav_profile) {
+                 if (mCurrentFragment != FRAG_REPORT) {
+                    replaceFragment(ProfileFragment);
                     mCurrentFragment = FRAG_PROFILE;
-                }*/
-
+                } */
 
                 progressDialog.show();
                 progressDialog.setMessage("Đang đăng xuất...");
@@ -74,7 +78,7 @@ public class DashboardActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 startActivity(intent);
                 finish();
-            }
+
             return true;
         });
     }
@@ -85,9 +89,11 @@ public class DashboardActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+
     private void inIt() {
         progressDialog = new ProgressDialog(this);
         mBottomNavigationView = findViewById(R.id.nav_bottom_view);
+
     }
 
 }

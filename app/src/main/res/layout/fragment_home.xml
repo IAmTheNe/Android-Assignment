@@ -117,6 +117,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvThayNhot"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -210,9 +211,10 @@
         android:background="@drawable/custom_layout_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clHeader"
-        app:layout_constraintVertical_bias="0">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/ll1"
@@ -245,8 +247,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
-                    android:text="Nhắc hẹn" />
+                    android:text="Nhắc hẹn"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -267,8 +269,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
-                    android:text="Xem giá xăng" />
+                    android:text="Xem giá xăng"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -289,8 +291,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
-                    android:text="ATM gần đây" />
+                    android:text="ATM gần đây"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -325,9 +327,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
                     android:text="Trạm xăng gần đây"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -348,8 +350,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
-                    android:text="Gọi cứu hộ" />
+                    android:text="Gọi cứu hộ"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -370,10 +372,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
-                    android:text="Xem thêm" />
+                    android:text="Xem thêm"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintTop_toBottomOf="@id/ll2"
+            app:layout_constraintVertical_bias="0">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/profile"
+                    android:layout_marginLeft="55dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_person"
+                    app:backgroundTint="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginTop="5dp"
+                    android:text="My Profile"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
