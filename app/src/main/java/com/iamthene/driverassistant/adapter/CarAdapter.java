@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.iamthene.driverassistant.R;
+import com.iamthene.driverassistant.model.Vehicle;
 import com.iamthene.driverassistant.model.VehicleDetail;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarVH> {
         holder.tvVehicleName.setText(vh.getName());
         holder.tvBrand.setText(vh.getBrand());
         holder.tvPlate.setText(vh.getNumber());
-//        holder.tvType.setText(vh.getType().getType());
+        holder.tvType.setText(vh.getType().toString());
     }
 
     @Override

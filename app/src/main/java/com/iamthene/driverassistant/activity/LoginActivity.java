@@ -45,10 +45,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.User;
+import com.iamthene.driverassistant.presenter.CarManagerInterface;
+import com.iamthene.driverassistant.presenter.GetCarPresenter;
 import com.iamthene.driverassistant.presenter.LoginInterface;
 import com.iamthene.driverassistant.presenter.LoginPresenter;
 
-public class LoginActivity extends AppCompatActivity implements LoginInterface {
+public class LoginActivity extends AppCompatActivity implements LoginInterface, CarManagerInterface.OnCheckEmptyList {
     private static final int RC_SIGN_IN = 123;
     TextInputLayout inpUsername, inpPassword;
     EditText etUsername, etPassword;
@@ -62,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
     LoginPresenter mLoginPresenter;
     SharedPreferences sharedPreferences;
     ImageView civAvatar;
+    GetCarPresenter mPresenter;
 
     CallbackManager mCallbackManager;
     private String TAG = "Facebook Activity";
@@ -201,6 +204,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
         dialog = new ProgressDialog(this);
         mLoginPresenter = new LoginPresenter(this);
         civAvatar = findViewById(R.id.civAvatar);
+        mPresenter = new GetCarPresenter(this);
     }
 
     // Google Create Request
@@ -324,11 +328,8 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
         }
 
         Thread.sleep(2500);
-        dialog.dismiss();
-        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-        startActivity(intent);
-        finishAffinity();
+
+        mPresenter.hasNoOwnerCar();
     }
 
     @Override
@@ -342,10 +343,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
             editor.apply();
         }
         dialog.dismiss();
-        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-        startActivity(intent);
-        finishAffinity();
+        mPresenter.hasNoOwnerCar();
     }
 
     @Override
@@ -382,5 +380,23 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void exists() {
+        dialog.dismiss();
+        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+        finishAffinity();
+    }
+
+    @Override
+    public void empty() {
+        dialog.dismiss();
+        Intent intent = new Intent(LoginActivity.this, NewCarActivity.class);
+        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+        finishAffinity();
     }
 }

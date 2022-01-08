@@ -58,7 +58,7 @@ public class ListCarActivity extends AppCompatActivity implements View.OnClickLi
                     VehicleDetail vd = snapshot.getValue(VehicleDetail.class);
                     if (vd != null) {
                         detailList.add(vd);
-                        mKeys.add(_myRef.getKey());
+                        mKeys.add(snapshot.getKey());
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -107,9 +107,9 @@ public class ListCarActivity extends AppCompatActivity implements View.OnClickLi
         rvListCar = findViewById(R.id.rvListCar);
         toolbar = findViewById(R.id.toolbar);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvListCar.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+        rvListCar.setLayoutManager(linearLayoutManager);
 
         toolbar.setNavigationOnClickListener(this);
         toolbar.setOnMenuItemClickListener(this);

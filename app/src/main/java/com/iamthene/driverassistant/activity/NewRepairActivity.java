@@ -20,7 +20,7 @@ import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.Repair;
 import com.iamthene.driverassistant.model.VehicleDetail;
 import com.iamthene.driverassistant.presenter.CarManagerInterface;
-import com.iamthene.driverassistant.presenter.CarPresenter;
+import com.iamthene.driverassistant.presenter.AddCarPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -37,7 +37,7 @@ public class NewRepairActivity extends AppCompatActivity
     DatabaseReference _mRef;
     List<VehicleDetail> lstVehicle;
     ArrayAdapter<VehicleDetail> adapter;
-    CarPresenter mCarPresenter;
+    AddCarPresenter mAddCarPresenter;
 
 
     @Override
@@ -63,7 +63,7 @@ public class NewRepairActivity extends AppCompatActivity
         etPartRepaired = findViewById(R.id.etPartRepaired);
         etPriceRepair = findViewById(R.id.etPriceRepair);
         etCarNameOption3 = findViewById(R.id.etCarNameOption3);
-        mCarPresenter = new CarPresenter(this);
+        mAddCarPresenter = new AddCarPresenter(this);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class NewRepairActivity extends AppCompatActivity
     }
 
     private void getCar() {
-        lstVehicle = mCarPresenter.getOwnerCar();
+        lstVehicle = mAddCarPresenter.getOwnerCar();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, lstVehicle);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         etCarNameOption3.setAdapter(adapter);
