@@ -12,10 +12,9 @@
     <string name="hello">Xin chào,</string>
 
     <string name="add_new_car_message">Bổ sung thêm xe của bạn để có thể dễ dàng quản lý hơn</string>
-<<<<<<< HEAD
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-=======
     <string name="empty_list">Hiện tại bạn chưa có ghi chú nào!</string>
->>>>>>> 191f0552afafab2f7037bb81664284a1054fa4cc
+
 </resources>
