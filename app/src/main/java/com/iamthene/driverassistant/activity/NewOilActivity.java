@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
@@ -14,6 +16,7 @@ import com.iamthene.driverassistant.model.Oil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class NewOilActivity extends AppCompatActivity {
 
@@ -65,10 +68,14 @@ public class NewOilActivity extends AppCompatActivity {
         o.setPlaceOil(etPlaceOil.getText().toString());
         o.setTimeOil(etTimeOil.getText().toString());
 
-        myRef = database.getReference("Oil");
-        String id = myRef.push().getKey();
-        o.setIdOil(id);
-        myRef.child(id).setValue(o);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null){
+            myRef = database.getReference("Oil");
+            String id = myRef.push().getKey();
+            o.setIdOil(id);
+            String keys = Objects.requireNonNull(id);
+            myRef.child(user.getUid()).child(keys).setValue(o);
+        }
     }
 
     public void init() {

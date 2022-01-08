@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
@@ -52,8 +54,11 @@ public class DetailOilActivity extends AppCompatActivity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        myRef = database.getReference("Oil");
-                        myRef.child(o.getIdOil()).removeValue();
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            myRef = database.getReference("Oil");
+                            myRef.child(user.getUid()).child(o.getIdOil()).removeValue();
+                        }
                         finish();
                     }
                 })

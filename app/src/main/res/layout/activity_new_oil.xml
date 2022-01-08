@@ -26,7 +26,7 @@
             android:textSize="20dp"
             android:paddingLeft="20dp"
             android:paddingTop="50dp"
-            android:text="Nơi thay: "/>
+            android:text="Địa điểm thay: "/>
 
         <EditText
             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             android:paddingTop="50dp"
             android:textSize="20dp"
             android:paddingLeft="20dp"
-            android:text="Số tiền: "/>
+            android:text="Số tiền cần trả: "/>
 
         <EditText
             android:layout_width="match_parent"
@@ -76,19 +76,20 @@
         android:layout_margin="10dp"
         android:paddingTop="50dp"
         android:gravity="center">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnSaveOil"
-            android:text="Save"
-            android:layout_margin="10dp"
-            android:backgroundTint="#62BD31"/>
 
         <Button
+            android:id="@+id/btnSaveOil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:backgroundTint="#619AE1"
+            android:text="Save" />
+
+        <Button
             android:id="@+id/btnCancelOil"
-            android:text="Cancel"
-            android:backgroundTint="#DF0C0C"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#B6B437"
+            android:text="Cancel" />
     </LinearLayout>
 </TableLayout>
