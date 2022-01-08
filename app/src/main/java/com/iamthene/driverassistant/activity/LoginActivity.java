@@ -368,16 +368,13 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface, 
         dialog.setMessage("Mật khẩu đang được gửi đến gmail của bạn...!");
         dialog.show();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String emailAddress = "nhtuongvy201@gmail.com";
+        String emailAddress = "nguyenthe.tnt@gmail.com";
 
         auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        dialog.dismiss();
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    dialog.dismiss();
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
