@@ -1,18 +1,10 @@
 package com.iamthene.driverassistant.fragment;
-import static android.app.Activity.RESULT_OK;
-import static android.content.ContentValues.TAG;
-import static com.iamthene.driverassistant.activity.ProfileActivity.MY_REQUEST_CODE;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,32 +22,24 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.activity.DashboardActivity;
-import com.iamthene.driverassistant.activity.LoginActivity;
 import com.iamthene.driverassistant.activity.OilActivity;
 import com.iamthene.driverassistant.activity.ProfileActivity;
 import com.iamthene.driverassistant.activity.RefuelActivity;
 import com.iamthene.driverassistant.activity.RepairActivity;
+import com.iamthene.driverassistant.activity.WeatherActivity;
 import com.iamthene.driverassistant.presenter.UserManagerPresenter;
-
-import java.io.IOException;
 
 public class HomeFragment extends Fragment {
     CardView cvLinhKien, cvDoXang, cvThayNhot;
     UserManagerPresenter userManagerPresenter;
     TextView tvYourName;
     ImageView civAvatar;
-    FloatingActionButton profile;
+    FloatingActionButton profile, fabWeather;
+
     private ImageView img_AVT;
 
     private EditText edtFirstName, edtLastName, edtEmail;
@@ -89,6 +73,7 @@ public class HomeFragment extends Fragment {
         Uri photo = user.getPhotoUrl();
         Glide.with(this).load(photo).error(R.drawable.no_avatar).into(civAvatar);
     }
+
     public void inIt(View view) {
         cvLinhKien = view.findViewById(R.id.cvThayLinhKien);
         cvDoXang = view.findViewById(R.id.cvDoXang);
@@ -101,6 +86,7 @@ public class HomeFragment extends Fragment {
         edtLastName = view.findViewById(R.id.edtLastName);
         edtEmail = view.findViewById(R.id.edtEmail);
         img_AVT = view.findViewById(R.id.img_AVT);
+        fabWeather = view.findViewById(R.id.fabWeather);
     }
 
     private void setEvent() {
@@ -125,5 +111,9 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
+        fabWeather.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WeatherActivity.class);
+            startActivity(intent);
+        });
     }
 }

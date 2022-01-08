@@ -281,17 +281,18 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabWeather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_atm"
+                    android:src="@drawable/ic_sunny"
                     app:backgroundTint="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="ATM gần đây"
+                    android:text="Thời tiết"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
