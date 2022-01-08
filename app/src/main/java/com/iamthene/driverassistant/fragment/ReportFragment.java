@@ -41,23 +41,20 @@ public class ReportFragment extends Fragment {
     }
 
     private void initTabLayout() {
-        new TabLayoutMediator(tab_layout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position) {
-                    case 0:
-                        tab.setText("Tổng quan");
-                        break;
-                    case 1:
-                        tab.setText("Đổ xăng");
-                        break;
-                    case 2:
-                        tab.setText("Thay nhớt");
-                        break;
-                    case 3:
-                        tab.setText("Sửa chữa");
-                        break;
-                }
+        new TabLayoutMediator(tab_layout, viewPager2, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Tổng quan");
+                    break;
+                case 1:
+                    tab.setText("Đổ xăng");
+                    break;
+                case 2:
+                    tab.setText("Thay nhớt");
+                    break;
+                case 3:
+                    tab.setText("Sửa chữa");
+                    break;
             }
         }).attach();
     }

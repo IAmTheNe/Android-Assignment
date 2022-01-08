@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -15,21 +14,17 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.LinhKien;
-import com.iamthene.driverassistant.model.Vehicle;
 import com.iamthene.driverassistant.model.VehicleDetail;
 import com.iamthene.driverassistant.presenter.CarManagerInterface;
 import com.iamthene.driverassistant.presenter.CarPresenter;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -101,7 +96,7 @@ public class NewRepairActivity extends AppCompatActivity
         final int month = calendar.get(Calendar.MONTH) + 1;
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        String getDate = day + "/" + month + "/" + year;
+        String getDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         etDateRepair.setText(getDate);
 
         etDateRepair.setOnClickListener(v -> {
@@ -120,7 +115,7 @@ public class NewRepairActivity extends AppCompatActivity
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        String now = hour + ":" + minute;
+        String now = new SimpleDateFormat("HH:mm").format(new Date());
         etTimeRepair.setText(now);
 
         etTimeRepair.setOnClickListener(v -> {

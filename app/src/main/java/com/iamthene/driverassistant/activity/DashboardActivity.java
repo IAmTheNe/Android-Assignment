@@ -1,28 +1,17 @@
 package com.iamthene.driverassistant.activity;
 
-//import static com.iamthene.driverassistant.fragment.ProfileFragment.MY_REQUEST_CODE;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.fragment.HomeFragment;
 import com.iamthene.driverassistant.fragment.NotificationFragment;
@@ -62,12 +51,8 @@ public class DashboardActivity extends AppCompatActivity {
                     replaceFragment(new ReportFragment());
                     mCurrentFragment = FRAG_REPORT;
                 }
+            } else if (id == R.id.nav_profile) {
 
-            }/* else if (id == R.id.nav_profile) {
-                 if (mCurrentFragment != FRAG_REPORT) {
-                    replaceFragment(ProfileFragment);
-                    mCurrentFragment = FRAG_PROFILE;
-                } */
 
                 progressDialog.show();
                 progressDialog.setMessage("Đang đăng xuất...");
@@ -78,7 +63,12 @@ public class DashboardActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 startActivity(intent);
                 finish();
-
+            } else if (id == R.id.nav_alarm) {
+                if (mCurrentFragment != FRAG_ALARM) {
+                    replaceFragment(new NotificationFragment());
+                    mCurrentFragment = FRAG_ALARM;
+                }
+            }
             return true;
         });
     }
@@ -93,7 +83,6 @@ public class DashboardActivity extends AppCompatActivity {
     private void inIt() {
         progressDialog = new ProgressDialog(this);
         mBottomNavigationView = findViewById(R.id.nav_bottom_view);
-
     }
 
 }

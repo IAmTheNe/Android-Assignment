@@ -48,7 +48,7 @@ public class ReportGeneralFragment extends Fragment {
         mPieChart.setUsePercentValues(true);
         mPieChart.setEntryLabelTextSize(12);
         mPieChart.setEntryLabelColor(Color.BLACK);
-        mPieChart.setCenterText("Thống kê doanh thu");
+        mPieChart.setCenterText("Thống kê chi tiêu");
         mPieChart.setCenterTextSize(24);
         mPieChart.getDescription().setEnabled(false);
 
