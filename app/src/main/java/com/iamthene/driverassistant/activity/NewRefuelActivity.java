@@ -74,7 +74,9 @@ public class NewRefuelActivity extends AppCompatActivity {
 
         if (user != null) {
             myRef = database.getReference("Refuel");
-            String keys = Objects.requireNonNull(myRef.push().getKey());
+            String id = myRef.push().getKey();
+            p.setId(id);
+            String keys = Objects.requireNonNull(id);
             myRef.child(user.getUid()).child(keys).setValue(p);
         }
     }
