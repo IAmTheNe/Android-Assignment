@@ -1,9 +1,5 @@
 package com.iamthene.driverassistant.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -11,11 +7,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.WeatherData;
@@ -104,7 +103,7 @@ public class WeatherActivity extends AppCompatActivity {
 
     private void letsdoSomeNetworking(RequestParams params) {
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get(weather_url, params, new JsonHttpResponseHandler(){
+        client.get(weather_url, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -115,10 +114,7 @@ public class WeatherActivity extends AppCompatActivity {
                 updateUI(weatherData);
             }
 
-            @Override
-            public void onFailure(int statusCode, PreferenceActivity.Header[] headers, String responseString, Throwable throwable) {
-//                super.onFailure(statusCode, headers, responseString, throwable);
-            }
+
         });
     }
 
@@ -135,13 +131,11 @@ public class WeatherActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode==REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
-            {
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(WeatherActivity.this, "Location get successful", Toast.LENGTH_SHORT).show();
                 getWeatherForCurrentLocation();
-            }
-            else {
+            } else {
 
             }
         }
