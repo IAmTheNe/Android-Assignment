@@ -237,6 +237,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabAlarm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
@@ -281,17 +282,18 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fabWeather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_atm"
+                    android:src="@drawable/ic_sunny"
                     app:backgroundTint="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="ATM gần đây"
+                    android:text="Thời tiết"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
@@ -362,43 +364,9 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_more"
-                    app:backgroundTint="@color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Xem thêm"
-                    android:textSize="16sp" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="16dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent=".15"
-            app:layout_constraintTop_toBottomOf="@id/ll2"
-            app:layout_constraintVertical_bias="0">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/profile"
-                    android:layout_marginLeft="55dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_person"
                     app:backgroundTint="@color/white" />
@@ -406,14 +374,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="45dp"
                     android:layout_marginTop="5dp"
-                    android:text="My Profile"
-                    android:textAlignment="center"
+                    android:text="Trang cá nhân"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

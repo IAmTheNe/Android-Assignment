@@ -15,12 +15,12 @@ import com.iamthene.driverassistant.model.VehicleDetail;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarPresenter {
+public class AddCarPresenter {
     private final CarManagerInterface.AddCar mAddCar;
     private final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
     private final DatabaseReference _myRef = mDatabase.getReference("ListCars");
 
-    public CarPresenter(CarManagerInterface.AddCar mAddCar) {
+    public AddCarPresenter(CarManagerInterface.AddCar mAddCar) {
         this.mAddCar = mAddCar;
     }
 
@@ -87,4 +87,5 @@ public class CarPresenter {
         }
         return yourCar;
     }
+
 }

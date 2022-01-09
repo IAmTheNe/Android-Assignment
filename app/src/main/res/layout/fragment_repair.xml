@@ -12,6 +12,6 @@
         android:layout_marginHorizontal="16dp"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:listitem="@layout/item_timeline" />
+        tools:listitem="@layout/item_repair_timeline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

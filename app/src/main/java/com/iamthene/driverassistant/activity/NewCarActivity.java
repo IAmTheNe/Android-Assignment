@@ -13,8 +13,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.Vehicle;
 import com.iamthene.driverassistant.model.VehicleDetail;
-import com.iamthene.driverassistant.presenter.CarPresenter;
 import com.iamthene.driverassistant.presenter.CarManagerInterface;
+import com.iamthene.driverassistant.presenter.AddCarPresenter;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
     EditText etCarName, etCarPlate, etCarBrand, etCapacity, etCarKM;
     AutoCompleteTextView etCarType;
     Button btnCreate;
-    CarPresenter mCarPresenter;
+    AddCarPresenter mAddCarPresenter;
     TextInputLayout tilCarName, tilCarType, tilCarBrand, tilCapacity, tilCarKM, tilCarPlate;
     int positionVehicle = 0;
 
@@ -42,12 +42,16 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
         VehicleDetail vehicle = new VehicleDetail();
         vehicle.setName(etCarName.getText().toString());
         vehicle.setBrand(etCarBrand.getText().toString());
-        vehicle.setCurrentKM(Integer.parseInt(etCarKM.getText().toString()));
+        if (etCarKM.getText().toString().isEmpty()) {
+            vehicle.setCurrentKM(0);
+        } else {
+            vehicle.setCurrentKM(Integer.parseInt(etCarKM.getText().toString()));
+        }
         vehicle.setNumber(etCarPlate.getText().toString());
 
         etCarType.setOnItemClickListener((parent, view, position, id) -> positionVehicle = position);
         vehicle.setType((Vehicle) etCarType.getAdapter().getItem(positionVehicle));
-        mCarPresenter.addCar(vehicle);
+        mAddCarPresenter.addCar(vehicle);
 
     }
 
@@ -65,12 +69,12 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
         tilCarKM = findViewById(R.id.tilCarKM);
         tilCarType = findViewById(R.id.tilCarType);
         tilCarPlate = findViewById(R.id.tilCarPlate);
-        mCarPresenter = new CarPresenter(this);
+        mAddCarPresenter = new AddCarPresenter(this);
     }
 
     @Override
     public void addSuccess() {
-        Intent intent = new Intent(this, DashboardActivity.class);
+        Intent intent = new Intent(this, ListCarActivity.class);
         startActivity(intent);
     }
 
@@ -98,7 +102,7 @@ public class NewCarActivity extends AppCompatActivity implements CarManagerInter
     }
 
     private void getCar() {
-        List<Vehicle> lstVehicle = mCarPresenter.getCar();
+        List<Vehicle> lstVehicle = mAddCarPresenter.getCar();
         ArrayAdapter<Vehicle> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, lstVehicle);
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);

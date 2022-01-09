@@ -3,14 +3,20 @@ package com.iamthene.driverassistant.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -20,95 +26,66 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.adapter.RefuelAdapter;
+import com.iamthene.driverassistant.fragment.EmptyFragment;
+import com.iamthene.driverassistant.fragment.RefuelFragment;
 import com.iamthene.driverassistant.model.Refuel;
+import com.iamthene.driverassistant.presenter.RefuelInterface;
+import com.iamthene.driverassistant.presenter.RefuelPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefuelActivity extends AppCompatActivity {
-    RecyclerView rvRefuel;
-    List<Refuel> lstRefuel;
-    RefuelAdapter adapter;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef;
-    ImageButton btnAdd;
-    List<String> mKeys = new ArrayList<>();
+public class RefuelActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, RefuelInterface.OnCheckEmptyList {
+    FrameLayout frlContent;
+    MaterialToolbar toolbar;
+    RefuelPresenter mPresenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refuel);
-
-        rvRefuel = findViewById(R.id.rvRefuel);
-        btnAdd = findViewById(R.id.imgBtnAdd);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(RefuelActivity.this, NewRefuelActivity.class);
-                startActivity(i);
-            }
-        });
-
-        getData();
-
-        rvRefuel.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RefuelAdapter(lstRefuel, RefuelActivity.this);
-        rvRefuel.setAdapter(adapter);
+        inIt();
+        inItEvent();
     }
 
-    private void getData() {
-        lstRefuel = new ArrayList<>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        myRef = database.getReference("Refuel");
-        assert user != null;
-        myRef.child(user.getUid()).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Refuel p = snapshot.getValue(Refuel.class);
-                if (p != null) {
-                    lstRefuel.add(p);
-                    String key = snapshot.getKey();
-                    mKeys.add(key);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Refuel p = snapshot.getValue(Refuel.class);
-                if (p == null || lstRefuel == null || lstRefuel.isEmpty()) {
-                    return;
-                }
-                int index = mKeys.indexOf(snapshot.getKey());
-                lstRefuel.set(index, p);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Refuel p = snapshot.getValue(Refuel.class);
-                if (p == null || lstRefuel == null || lstRefuel.isEmpty()) {
-                    return;
-                }
-                int index = mKeys.indexOf(snapshot.getKey());
-                if (index != -1) {
-                    lstRefuel.remove(index);
-                    mKeys.remove(index);
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+    private void inItEvent() {
+        mPresenter.isEmptyList();
     }
 
+    private void inIt() {
+        frlContent = findViewById(R.id.frlContent);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setOnMenuItemClickListener(this);
+        toolbar.setNavigationOnClickListener(view -> {
+            finish();
+        });
+        mPresenter = new RefuelPresenter(this);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.mnuAdd) {
+            Intent intent = new Intent(this, NewRefuelActivity.class);
+            startActivity(intent);
+        }
+        return false;
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frlContent, fragment);
+        transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void empty() {
+        replaceFragment(new EmptyFragment());
+    }
+
+    @Override
+    public void exists() {
+        replaceFragment(new RefuelFragment());
+    }
 }

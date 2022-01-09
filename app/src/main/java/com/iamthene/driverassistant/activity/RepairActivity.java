@@ -12,25 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.fragment.EmptyFragment;
 import com.iamthene.driverassistant.fragment.RepairFragment;
-import com.iamthene.driverassistant.model.LinhKien;
-import com.iamthene.driverassistant.presenter.CarPresenter;
 import com.iamthene.driverassistant.presenter.RepairInterface;
 import com.iamthene.driverassistant.presenter.RepairPresenter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, RepairInterface.GetRepairList {
+public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, RepairInterface.OnCheckEmptyList {
     MaterialToolbar toolbar;
     FrameLayout frlContent;
     RepairPresenter mPresenter;
@@ -71,16 +59,16 @@ public class RepairActivity extends AppCompatActivity implements Toolbar.OnMenuI
     }
 
     private void initEvent() {
-        mPresenter.fragmentTransactions();
+        mPresenter.isEmptyList();
     }
 
     @Override
-    public void onSuccess() {
+    public void empty() {
         replaceFragment(new EmptyFragment());
     }
 
     @Override
-    public void onFail() {
+    public void exists() {
         replaceFragment(new RepairFragment());
     }
 

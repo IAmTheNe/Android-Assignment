@@ -1,18 +1,11 @@
 package com.iamthene.driverassistant.activity;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,15 +45,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.User;
+import com.iamthene.driverassistant.presenter.CarManagerInterface;
+import com.iamthene.driverassistant.presenter.GetCarPresenter;
 import com.iamthene.driverassistant.presenter.LoginInterface;
 import com.iamthene.driverassistant.presenter.LoginPresenter;
 
-import java.math.BigDecimal;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Currency;
-
-public class LoginActivity extends AppCompatActivity implements LoginInterface {
+public class LoginActivity extends AppCompatActivity implements LoginInterface, CarManagerInterface.OnCheckEmptyList {
     private static final int RC_SIGN_IN = 123;
     TextInputLayout inpUsername, inpPassword;
     EditText etUsername, etPassword;
@@ -74,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
     LoginPresenter mLoginPresenter;
     SharedPreferences sharedPreferences;
     ImageView civAvatar;
+    GetCarPresenter mPresenter;
 
     CallbackManager mCallbackManager;
     private String TAG = "Facebook Activity";
@@ -213,6 +204,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
         dialog = new ProgressDialog(this);
         mLoginPresenter = new LoginPresenter(this);
         civAvatar = findViewById(R.id.civAvatar);
+        mPresenter = new GetCarPresenter(this);
     }
 
     // Google Create Request
@@ -244,6 +236,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
         // Pass the activity result back to the Facebook SDK
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -255,11 +248,11 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
     private void updateUI(FirebaseUser currentUser) {
         try {
             Toast.makeText(LoginActivity.this, currentUser.getUid(), Toast.LENGTH_SHORT).show();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
+
     private void handleFacebookAccessToken(AccessToken token) {
         Log.d(TAG, "handleFacebookAccessToken:" + token);
 
@@ -335,11 +328,8 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
         }
 
         Thread.sleep(2500);
-        dialog.dismiss();
-        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-        startActivity(intent);
-        finishAffinity();
+
+        mPresenter.hasNoOwnerCar();
     }
 
     @Override
@@ -353,10 +343,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
             editor.apply();
         }
         dialog.dismiss();
-        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-        startActivity(intent);
-        finishAffinity();
+        mPresenter.hasNoOwnerCar();
     }
 
     @Override
@@ -377,21 +364,36 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
     }
 
     //@Override
-    private void onClickforGotPassword(){
+    private void onClickforGotPassword() {
         dialog.setMessage("Mật khẩu đang được gửi đến gmail của bạn...!");
         dialog.show();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String emailAddress = "trannguyenthe2310@gmail.com";
+        String emailAddress = "nguyenthe.tnt@gmail.com";
 
         auth.sendPasswordResetEmail(emailAddress)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        dialog.dismiss();
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    dialog.dismiss();
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Email sent", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public void exists() {
+        dialog.dismiss();
+        Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+        finishAffinity();
+    }
+
+    @Override
+    public void empty() {
+        dialog.dismiss();
+        Intent intent = new Intent(LoginActivity.this, NewCarActivity.class);
+        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+        finishAffinity();
     }
 }

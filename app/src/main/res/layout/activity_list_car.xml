@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.RefuelActivity">
+    tools:context=".activity.ListCarActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarOption3"
@@ -28,15 +28,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="start|center"
-                android:text="Lịch sử"
+                android:text="Danh sách xe"
                 android:textColor="@android:color/holo_blue_light" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <FrameLayout
-        android:id="@+id/frlContent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvListCar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_car" />
 </LinearLayout>

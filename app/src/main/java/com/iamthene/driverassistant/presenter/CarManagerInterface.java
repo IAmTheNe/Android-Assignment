@@ -8,4 +8,9 @@ public interface CarManagerInterface {
 
         void addError(VehicleDetail v);
     }
+
+    interface OnCheckEmptyList {
+        void exists();
+        void empty();
+    }
 }

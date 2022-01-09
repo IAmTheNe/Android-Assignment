@@ -27,17 +27,18 @@
             android:id="@+id/edtLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
             android:layout_marginTop="30dp"
+            android:layout_weight="5"
             android:hint="Họ"
             android:padding="10dp" />
+
         <EditText
             android:id="@+id/edtFirstName"
-            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
-            android:layout_weight="4"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="30dp"
+            android:layout_weight="4"
             android:hint="Tên"
             android:padding="10dp" />
     </LinearLayout>
@@ -63,14 +64,14 @@
                 android:layout_weight="3"
                 android:hint="Danh sách xe"
                 android:padding="10dp"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnThietLap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:backgroundTint="#AD44AE77"
                 android:text="Thiết lập"
                 android:textColor="#D9DEE1" />

@@ -9,22 +9,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.iamthene.driverassistant.model.Repair;
+import com.iamthene.driverassistant.model.Refuel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepairPresenter {
-    private final RepairInterface.OnCheckEmptyList mGetRepair;
+public class RefuelPresenter {
+    private final RefuelInterface.OnCheckEmptyList refuel;
 
-    public RepairPresenter(RepairInterface.OnCheckEmptyList mGetRepair) {
-        this.mGetRepair = mGetRepair;
+    public RefuelPresenter(RefuelInterface.OnCheckEmptyList refuel) {
+        this.refuel = refuel;
     }
 
     public void isEmptyList() {
-        List<Repair> lstLinKien = new ArrayList<>();
+        List<Refuel> lstRefuel = new ArrayList<>();
         FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference _myRef = mDatabase.getReference("Repair");
+        DatabaseReference _myRef = mDatabase.getReference("Refuel");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
@@ -32,14 +32,14 @@ public class RepairPresenter {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        Repair lk = ds.getValue(Repair.class);
-                        lstLinKien.add(lk);
+                        Refuel r = ds.getValue(Refuel.class);
+                        lstRefuel.add(r);
                     }
 
-                    if (lstLinKien.isEmpty()) {
-                        mGetRepair.empty();
+                    if (lstRefuel.isEmpty()) {
+                        refuel.empty();
                     } else {
-                        mGetRepair.exists();
+                        refuel.exists();
                     }
                 }
 

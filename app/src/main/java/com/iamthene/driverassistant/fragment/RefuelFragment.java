@@ -19,74 +19,83 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.adapter.RepairAdapter;
-import com.iamthene.driverassistant.model.Repair;
+import com.iamthene.driverassistant.adapter.RefuelAdapter;
+import com.iamthene.driverassistant.model.Refuel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepairFragment extends Fragment {
-    RecyclerView rvPartChange;
-    RepairAdapter adapter;
-    List<Repair> lstLK;
-    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference _myRef;
-    ArrayList<String> mKeys = new ArrayList<>();
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_repair, container, false);
-    }
+public class RefuelFragment extends Fragment {
+    RecyclerView rvRefuel;
+    List<Refuel> lstRefuel;
+    RefuelAdapter adapter;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef;
+    List<String> mKeys = new ArrayList<>();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         inIt(view);
         getData();
-        adapter = new RepairAdapter(getActivity(), lstLK);
-        rvPartChange.setAdapter(adapter);
+        adapter = new RefuelAdapter(lstRefuel, getActivity());
+        rvRefuel.setAdapter(adapter);
+
+
+    }
+
+    private void inIt(View view) {
+        rvRefuel = view.findViewById(R.id.rvRefuel);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rvRefuel.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_refuel, container, false);
     }
 
     private void getData() {
-        lstLK = new ArrayList<>();
+        lstRefuel = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        _myRef = mDatabase.getReference("Repair");
+        myRef = database.getReference("Refuel");
         assert user != null;
-        _myRef.child(user.getUid()).addChildEventListener(new ChildEventListener() {
+        myRef.child(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Repair repair = snapshot.getValue(Repair.class);
-                if (repair != null) {
-                    lstLK.add(repair);
-                    mKeys.add(snapshot.getKey());
+                Refuel p = snapshot.getValue(Refuel.class);
+                if (p != null) {
+                    lstRefuel.add(p);
+                    String key = snapshot.getKey();
+                    mKeys.add(key);
                     adapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Repair repair = snapshot.getValue(Repair.class);
-                if (repair == null || lstLK == null || lstLK.isEmpty()) {
+                Refuel p = snapshot.getValue(Refuel.class);
+                if (p == null || lstRefuel == null || lstRefuel.isEmpty()) {
                     return;
                 }
-                String key = snapshot.getKey();
-                int index = mKeys.indexOf(key);
-                lstLK.set(index, repair);
+                int index = mKeys.indexOf(snapshot.getKey());
+                lstRefuel.set(index, p);
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Repair repair = snapshot.getValue(Repair.class);
-                if (repair == null || lstLK == null || lstLK.isEmpty()) {
+                Refuel p = snapshot.getValue(Refuel.class);
+                if (p == null || lstRefuel == null || lstRefuel.isEmpty()) {
                     return;
                 }
-                String key = snapshot.getKey();
-                int index = mKeys.indexOf(key);
+                int index = mKeys.indexOf(snapshot.getKey());
                 if (index != -1) {
-                    lstLK.remove(index);
+                    lstRefuel.remove(index);
                     mKeys.remove(index);
                 }
                 adapter.notifyDataSetChanged();
@@ -102,13 +111,5 @@ public class RepairFragment extends Fragment {
 
             }
         });
-    }
-
-    private void inIt(View view) {
-        rvPartChange = view.findViewById(R.id.rvPartChange);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        rvPartChange.setLayoutManager(linearLayoutManager);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
     }
 }

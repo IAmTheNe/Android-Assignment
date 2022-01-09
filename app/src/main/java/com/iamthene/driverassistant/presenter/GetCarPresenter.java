@@ -9,22 +9,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.iamthene.driverassistant.model.Repair;
+import com.iamthene.driverassistant.model.VehicleDetail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepairPresenter {
-    private final RepairInterface.OnCheckEmptyList mGetRepair;
+public class GetCarPresenter {
+    CarManagerInterface.OnCheckEmptyList checkEmptyList;
+    private final FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    private final DatabaseReference _myRef = mDatabase.getReference("ListCars");
 
-    public RepairPresenter(RepairInterface.OnCheckEmptyList mGetRepair) {
-        this.mGetRepair = mGetRepair;
+    public GetCarPresenter(CarManagerInterface.OnCheckEmptyList checkEmptyList) {
+        this.checkEmptyList = checkEmptyList;
     }
 
-    public void isEmptyList() {
-        List<Repair> lstLinKien = new ArrayList<>();
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference _myRef = mDatabase.getReference("Repair");
+    public void hasNoOwnerCar() {
+        List<VehicleDetail> yourCar = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
@@ -32,16 +32,17 @@ public class RepairPresenter {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        Repair lk = ds.getValue(Repair.class);
-                        lstLinKien.add(lk);
+                        VehicleDetail vd = ds.getValue(VehicleDetail.class);
+                        yourCar.add(vd);
                     }
 
-                    if (lstLinKien.isEmpty()) {
-                        mGetRepair.empty();
+                    if (yourCar.isEmpty()) {
+                        checkEmptyList.empty();
                     } else {
-                        mGetRepair.exists();
+                        checkEmptyList.exists();
                     }
                 }
+
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {

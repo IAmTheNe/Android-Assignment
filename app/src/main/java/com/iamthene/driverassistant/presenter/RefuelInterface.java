@@ -1,6 +1,6 @@
 package com.iamthene.driverassistant.presenter;
 
-public interface RepairInterface {
+public interface RefuelInterface {
     interface OnCheckEmptyList {
         void empty();
         void exists();
