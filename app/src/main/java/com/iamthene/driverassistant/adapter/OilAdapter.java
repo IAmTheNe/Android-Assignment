@@ -40,16 +40,15 @@ public class OilAdapter extends RecyclerView.Adapter<OilAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Oil o = lstOil.get(position);
+        if (o == null) {
+            return;
+        }
 
         holder.tvPlaceOil.setText(o.getPlaceOil());
         holder.tvTimeOil.setText(o.getTimeOil());
         holder.tvFeeOil.setText(o.getFeeOil());
-        holder.item_oil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickDetail(o);
-            }
-        });
+        holder.tvVehicleName.setText(o.getCarName());
+        holder.item_oil.setOnClickListener(v -> onClickDetail(o));
     }
 
     private void onClickDetail(Oil o) {
@@ -70,12 +69,13 @@ public class OilAdapter extends RecyclerView.Adapter<OilAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         LinearLayout item_oil;
-        TextView tvPlaceOil, tvFeeOil, tvTimeOil;
+        TextView tvPlaceOil, tvFeeOil, tvTimeOil, tvVehicleName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPlaceOil = itemView.findViewById(R.id.tvPlaceOil);
             tvFeeOil = itemView.findViewById(R.id.tvFeeOil);
             tvTimeOil = itemView.findViewById(R.id.tvTimeOil);
+            tvVehicleName = itemView.findViewById(R.id.tvVehicleName);
             item_oil = itemView.findViewById(R.id.item_oil);
         }
     }

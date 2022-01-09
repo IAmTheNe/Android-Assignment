@@ -1,95 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:stretchColumns="1"
+    android:orientation="vertical"
     tools:context=".activity.NewOilActivity">
 
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="thay nhớt"
-        android:textAllCaps="true"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"/>
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="5dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:textSize="20dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="50dp"
-            android:text="Địa điểm thay: "/>
-
-        <EditText
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:id="@+id/etPlaceOil"/>
-    </TableRow>
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:menu="@menu/menu_save"
+            app:navigationIcon="@drawable/ic_back_ios"
+            app:navigationIconTint="@android:color/holo_blue_light">
 
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:paddingTop="50dp"
-            android:textSize="20dp"
-            android:paddingLeft="20dp"
-            android:text="Số tiền cần trả: "/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="50dp"
-            android:id="@+id/etFeeOil"/>
-    </TableRow>
-
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:paddingTop="50dp"
-            android:textSize="20dp"
-            android:paddingLeft="20dp"
-            android:text="Thời gian thay: "/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="30dp"
-            android:id="@+id/etTimeOil"/>
-    </TableRow>
-
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:text="Ghi chú"
+                android:textColor="@android:color/holo_blue_light" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:paddingTop="50dp"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnSaveOil"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inpCarNameOption3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:backgroundTint="#619AE1"
-            android:text="Save" />
+            android:hint="Tên xe"
+            app:endIconMode="dropdown_menu">
 
-        <Button
-            android:id="@+id/btnCancelOil"
-            android:layout_width="wrap_content"
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/etCarNameOption3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:imeOptions="actionNext"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#B6B437"
-            android:text="Cancel" />
+            android:layout_marginTop="16sp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inpFeeOil"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Số tiền">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etFeeOil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inpTimeOil"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:hint="Thời gian">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTimeOil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:imeOptions="actionNext"
+                    android:inputType="datetime" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16sp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inpPlaceOil"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Nơi thay nhớt">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPlaceOil"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
-</TableLayout>
+
+</LinearLayout>

@@ -1,106 +1,66 @@
 package com.iamthene.driverassistant.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.widget.FrameLayout;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.appbar.MaterialToolbar;
 import com.iamthene.driverassistant.R;
-import com.iamthene.driverassistant.adapter.OilAdapter;
-import com.iamthene.driverassistant.model.Oil;
+import com.iamthene.driverassistant.fragment.EmptyFragment;
+import com.iamthene.driverassistant.fragment.OilFragment;
+import com.iamthene.driverassistant.presenter.OilInterface;
+import com.iamthene.driverassistant.presenter.OilPresenter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class OilActivity extends AppCompatActivity {
-
-    RecyclerView rvOil;
-    List<Oil> lstOil;
-    OilAdapter adapter;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef;
-    ImageButton btnAddOil;
-    List<String> mKeys = new ArrayList<>();
+public class OilActivity extends AppCompatActivity implements OilInterface.OnCheckEmptyList {
+    OilPresenter mOilPresenter;
+    FrameLayout frlContent;
+    MaterialToolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oil);
-
-        rvOil = findViewById(R.id.rvOil);
-        btnAddOil = findViewById(R.id.BtnAddOil);
-        btnAddOil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(OilActivity.this, NewOilActivity.class);
-                startActivity(i);
-            }
-        });
-
-        getData();
-        rvOil.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new OilAdapter(lstOil, OilActivity.this);
-        rvOil.setAdapter(adapter);
+        inIt();
+        inItEvent();
     }
 
-    private void getData() {
-        lstOil = new ArrayList<>();
-        myRef = database.getReference("Oil");
-        myRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Oil o = snapshot.getValue(Oil.class);
-                if (o != null) {
-                    lstOil.add(o);
-                    String key = snapshot.getKey();
-                    mKeys.add(key);
-                    adapter.notifyDataSetChanged();
-                }
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Oil o = snapshot.getValue(Oil.class);
-                if (o == null || lstOil == null || lstOil.isEmpty()) {
-                    return;
-                }
-                int index = mKeys.indexOf(snapshot.getKey());
-                lstOil.set(index, o);
-                adapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Oil o = snapshot.getValue(Oil.class);
-                if (o == null || lstOil == null || lstOil.isEmpty()) {
-                    return;
-                }
-                int index = mKeys.indexOf(snapshot.getKey());
-                if (index != -1) {
-                    lstOil.remove(index);
-                    mKeys.remove(index);
-                }
-                adapter.notifyDataSetChanged();
-            }
+    private void inItEvent() {
+        mOilPresenter.isEmptyList();
+    }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+    private void inIt() {
+        mOilPresenter = new OilPresenter(this);
+        frlContent = findViewById(R.id.frlContent);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
+        toolbar.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.mnuAdd) {
+                Intent intent = new Intent(OilActivity.this, NewOilActivity.class);
+                startActivity(intent);
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            return false;
         });
+    }
+
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frlContent, fragment);
+        transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void exists() {
+        replaceFragment(new OilFragment());
+    }
+
+    @Override
+    public void empty() {
+        replaceFragment(new EmptyFragment());
     }
 }
