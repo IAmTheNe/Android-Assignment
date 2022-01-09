@@ -26,6 +26,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.iamthene.driverassistant.R;
+import com.iamthene.driverassistant.activity.AlarmActivity;
 import com.iamthene.driverassistant.activity.OilActivity;
 import com.iamthene.driverassistant.activity.ProfileActivity;
 import com.iamthene.driverassistant.activity.RefuelActivity;
@@ -38,7 +39,7 @@ public class HomeFragment extends Fragment {
     UserManagerPresenter userManagerPresenter;
     TextView tvYourName;
     ImageView civAvatar;
-    FloatingActionButton profile, fabWeather;
+    FloatingActionButton profile, fabWeather, fabAlarm;
 
     private ImageView img_AVT;
 
@@ -87,6 +88,7 @@ public class HomeFragment extends Fragment {
         edtEmail = view.findViewById(R.id.edtEmail);
         img_AVT = view.findViewById(R.id.img_AVT);
         fabWeather = view.findViewById(R.id.fabWeather);
+        fabAlarm = view.findViewById(R.id.fabAlarm);
     }
 
     private void setEvent() {
@@ -115,5 +117,10 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), WeatherActivity.class);
             startActivity(intent);
         });
+        fabAlarm.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AlarmActivity.class);
+            startActivity(intent);
+        });
+
     }
 }

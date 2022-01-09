@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DriverAssistant">
         <activity
+            android:name=".activity.NewAlarmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AlarmActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ListCarActivity"
             android:exported="false" />
         <activity
