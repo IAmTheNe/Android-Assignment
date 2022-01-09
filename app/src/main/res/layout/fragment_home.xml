@@ -321,6 +321,7 @@
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/faFindGasStation"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/ic_preferences"
                     app:backgroundTint="@color/white" />

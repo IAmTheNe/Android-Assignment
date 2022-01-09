@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.activity.AlarmActivity;
+import com.iamthene.driverassistant.activity.FindGasStationActivity;
 import com.iamthene.driverassistant.activity.OilActivity;
 import com.iamthene.driverassistant.activity.ProfileActivity;
 import com.iamthene.driverassistant.activity.RefuelActivity;
@@ -39,7 +40,7 @@ public class HomeFragment extends Fragment {
     UserManagerPresenter userManagerPresenter;
     TextView tvYourName;
     ImageView civAvatar;
-    FloatingActionButton profile, fabWeather, fabAlarm;
+    FloatingActionButton profile, fabWeather, fabAlarm, faFindGasStation;
 
     private ImageView img_AVT;
 
@@ -79,6 +80,7 @@ public class HomeFragment extends Fragment {
         cvLinhKien = view.findViewById(R.id.cvThayLinhKien);
         cvDoXang = view.findViewById(R.id.cvDoXang);
         cvThayNhot = view.findViewById(R.id.cvThayNhot);
+        faFindGasStation = view.findViewById(R.id.faFindGasStation);
         tvYourName = view.findViewById(R.id.tvYourName);
         civAvatar = view.findViewById(R.id.civAvatar);
         userManagerPresenter = new UserManagerPresenter();
@@ -110,6 +112,11 @@ public class HomeFragment extends Fragment {
 
         profile.setOnClickListener(view -> {
             Intent intent = new Intent(getActivity(), ProfileActivity.class);
+            startActivity(intent);
+        });
+
+        faFindGasStation.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), FindGasStationActivity.class);
             startActivity(intent);
         });
 
