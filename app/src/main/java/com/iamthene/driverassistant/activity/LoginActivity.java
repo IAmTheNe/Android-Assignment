@@ -381,7 +381,7 @@ public class LoginActivity extends AppCompatActivity implements LoginInterface {
         dialog.setMessage("Mật khẩu đang được gửi đến gmail của bạn...!");
         dialog.show();
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String emailAddress = "nhtuongvy201@gmail.com";
+        String emailAddress = "trannguyenthe2310@gmail.com";
 
         auth.sendPasswordResetEmail(emailAddress)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
