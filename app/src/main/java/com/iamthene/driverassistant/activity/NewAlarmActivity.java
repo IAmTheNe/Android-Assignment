@@ -95,8 +95,7 @@ public class NewAlarmActivity extends AppCompatActivity implements AlarmInterfac
 
     @Override
     public void addSuccess() {
-        Intent intent = new Intent(this, AlarmActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     @Override

@@ -1,9 +1,12 @@
 package com.iamthene.driverassistant.model;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 public class Refuel implements Serializable {
     private String id;
+    private String carNo;
     private String fee;
     private String place;
     private String fuel;
@@ -17,6 +20,14 @@ public class Refuel implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCarNo() {
+        return carNo;
+    }
+
+    public void setCarNo(String carNo) {
+        this.carNo = carNo;
     }
 
     public String getFee() {
@@ -66,4 +77,33 @@ public class Refuel implements Serializable {
     public void setExpDistance(String expDistance) {
         this.expDistance = expDistance;
     }
+
+    public boolean isEmptyFee() {
+        return TextUtils.isEmpty(fee);
+    }
+
+    public boolean isEmptyPlace() {
+        return TextUtils.isEmpty(place);
+    }
+
+    public boolean isEmptyFuel() {
+        return TextUtils.isEmpty(fuel);
+    }
+
+    public boolean isEmptyTime() {
+        return TextUtils.isEmpty(time);
+    }
+
+    public boolean isEmptyDistance() {
+        return TextUtils.isEmpty(distance);
+    }
+
+    public boolean isEmptyExpDistance() {
+        return TextUtils.isEmpty(expDistance);
+    }
+
+    public boolean isEmptyInput() {
+        return isEmptyFee() || isEmptyPlace() || isEmptyFuel() || isEmptyTime() || isEmptyDistance() || isEmptyExpDistance();
+    }
+
 }

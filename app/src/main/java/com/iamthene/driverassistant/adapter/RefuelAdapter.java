@@ -42,6 +42,7 @@ public class RefuelAdapter extends RecyclerView.Adapter<RefuelAdapter.ViewHolder
         holder.tvFuel.setText(p.getFuel());
         holder.tvFee.setText(p.getFee());
         holder.tvDate.setText(p.getTime());
+        holder.tvVehicleName.setText(p.getCarNo());
         holder.item_refuel.setOnClickListener(v -> onClickDetail(p));
     }
 
@@ -61,15 +62,17 @@ public class RefuelAdapter extends RecyclerView.Adapter<RefuelAdapter.ViewHolder
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout item_refuel;
-        TextView tvPlace, tvFee, tvFuel, tvDate;
+        TextView tvPlace, tvFee, tvFuel, tvDate, tvVehicleName;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvPlace = itemView.findViewById(R.id.tvPlace);
             tvFuel = itemView.findViewById(R.id.tvFuel);
             tvFee = itemView.findViewById(R.id.tvFee);
             tvDate = itemView.findViewById(R.id.tvDate);
+            tvVehicleName = itemView.findViewById(R.id.tvVehicleName);
             item_refuel = itemView.findViewById(R.id.item_refuel);
         }
     }
