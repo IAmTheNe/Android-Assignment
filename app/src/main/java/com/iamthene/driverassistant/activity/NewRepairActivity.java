@@ -12,32 +12,30 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.material.textfield.TextInputLayout;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.model.Repair;
 import com.iamthene.driverassistant.model.VehicleDetail;
-import com.iamthene.driverassistant.presenter.CarManagerInterface;
 import com.iamthene.driverassistant.presenter.AddCarPresenter;
+import com.iamthene.driverassistant.presenter.CarManagerInterface;
+import com.iamthene.driverassistant.presenter.RepairInterface;
+import com.iamthene.driverassistant.presenter.RepairPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class NewRepairActivity extends AppCompatActivity
-        implements Toolbar.OnMenuItemClickListener, CarManagerInterface.AddCar {
+        implements Toolbar.OnMenuItemClickListener, CarManagerInterface.AddCar, RepairInterface.OnAddRepair {
     MaterialToolbar toolbar;
     EditText etDateRepair, etTimeRepair, etPartRepaired, etPriceRepair;
+    TextInputLayout inpDateRepair, inpTimeRepair, inpPartRepair, inpPriceRepair;
     MaterialAutoCompleteTextView etCarNameOption3;
-    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference _mRef;
     List<VehicleDetail> lstVehicle;
     ArrayAdapter<VehicleDetail> adapter;
     AddCarPresenter mAddCarPresenter;
+    RepairPresenter mRepairPresenter;
 
 
     @Override
@@ -63,7 +61,12 @@ public class NewRepairActivity extends AppCompatActivity
         etPartRepaired = findViewById(R.id.etPartRepaired);
         etPriceRepair = findViewById(R.id.etPriceRepair);
         etCarNameOption3 = findViewById(R.id.etCarNameOption3);
+        inpDateRepair = findViewById(R.id.inpDateRepair);
+        inpPartRepair = findViewById(R.id.inpPartRepair);
+        inpPriceRepair = findViewById(R.id.inpPriceRepair);
+        inpTimeRepair = findViewById(R.id.inpTimeRepair);
         mAddCarPresenter = new AddCarPresenter(this);
+        mRepairPresenter = new RepairPresenter(this);
     }
 
     @Override
@@ -75,17 +78,13 @@ public class NewRepairActivity extends AppCompatActivity
             repair.setTime(etTimeRepair.getText().toString());
             repair.setPart(etPartRepaired.getText().toString());
             repair.setCarId(etCarNameOption3.getText().toString());
-            repair.setPrice(Integer.parseInt(etPriceRepair.getText().toString()));
-
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            if (user != null) {
-                _mRef = mDatabase.getReference("Repair");
-                String uid = _mRef.push().getKey();
-                repair.setId(uid);
-                String keys = Objects.requireNonNull(uid);
-                _mRef.child(user.getUid()).child(keys).setValue(repair);
+            if (etPriceRepair.getText().toString().isEmpty()) {
+                repair.setPrice(0);
+            } else {
+                repair.setPrice(Integer.parseInt(etPriceRepair.getText().toString()));
             }
-            finish();
+
+            mRepairPresenter.addRepair(repair);
         }
 
         return false;
@@ -116,7 +115,7 @@ public class NewRepairActivity extends AppCompatActivity
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        String now = new SimpleDateFormat("HH:mm").format(new Date());
+        String now = new SimpleDateFormat("HH:mm:ss").format(new Date());
         etTimeRepair.setText(now);
 
         etTimeRepair.setOnClickListener(v -> {
@@ -138,7 +137,18 @@ public class NewRepairActivity extends AppCompatActivity
 
     @Override
     public void addSuccess() {
+        finish();
+    }
 
+    @Override
+    public void addFailed(Repair repair) {
+        if (repair.isEmptyPart()) {
+            inpPartRepair.setError(getResources().getString(R.string.not_null));
+        }
+
+        if (repair.isEmptyPrice()) {
+            etPriceRepair.setText(0);
+        }
     }
 
     @Override

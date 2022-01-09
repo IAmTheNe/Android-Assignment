@@ -71,11 +71,12 @@
                 android:layout_weight="1"
                 android:hint="Ngày">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDateRepair"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:inputType="date"/>
+                    android:imeOptions="actionNext"
+                    android:inputType="date" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -110,10 +111,11 @@
                 android:layout_weight="1"
                 android:hint="Phụ tùng sửa">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPartRepaired"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,10 +128,11 @@
                 android:layout_weight="1"
                 android:hint="Chi phí">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPriceRepair"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:imeOptions="actionDone"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>

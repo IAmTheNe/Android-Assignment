@@ -15,17 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepairPresenter {
-    private final RepairInterface.OnCheckEmptyList mGetRepair;
+    private RepairInterface.OnCheckEmptyList mGetRepair;
+    private RepairInterface.OnAddRepair onAddRepair;
+    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference _myRef = mDatabase.getReference("Repair");
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public RepairPresenter(RepairInterface.OnCheckEmptyList mGetRepair) {
         this.mGetRepair = mGetRepair;
     }
 
+    public RepairPresenter(RepairInterface.OnAddRepair onAddRepair) {
+        this.onAddRepair = onAddRepair;
+    }
+
     public void isEmptyList() {
         List<Repair> lstLinKien = new ArrayList<>();
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference _myRef = mDatabase.getReference("Repair");
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String uid = user.getUid();
             _myRef.child(uid).addValueEventListener(new ValueEventListener() {
@@ -48,6 +53,28 @@ public class RepairPresenter {
 
                 }
             });
+        }
+    }
+
+    public void addRepair(Repair repair) {
+        if (repair.isEmptyInput()) {
+            onAddRepair.addFailed(repair);
+        } else {
+            if (user != null) {
+                String uid = user.getUid();
+                String keys = _myRef.push().getKey();
+                repair.setId(keys);
+                if (keys != null) {
+                    DatabaseReference dr = _myRef.child(uid).child(keys);
+                    dr.child("id").setValue(repair.getId());
+                    dr.child("carId").setValue(repair.getCarId());
+                    dr.child("date").setValue(repair.getDate());
+                    dr.child("time").setValue(repair.getTime());
+                    dr.child("part").setValue(repair.getPart());
+                    dr.child("price").setValue(repair.getPrice());
+                }
+                onAddRepair.addSuccess();
+            }
         }
     }
 }
