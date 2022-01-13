@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,10 +40,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivity extends AppCompatActivity {
 
     public static final int MY_REQUEST_CODE = 10;
-
-    private CircleImageView img_AVT;
-    public EditText edtFirstName, edtLastName, edtEmail;
-    private Button btnOk, btnThietLap;
+    MaterialToolbar toolbar;
+    CircleImageView img_AVT;
+    TextView tvUsername, tvUserEmail;
+    private Button btnThietLap, btnDangXuat;
     ActivityResultLauncher<Intent> mActivityResultLauncher;
 
 
@@ -80,11 +82,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void init() {
         img_AVT = findViewById(R.id.img_AVT);
-        edtFirstName = findViewById(R.id.edtFirstName);
-        edtLastName = findViewById(R.id.edtLastName);
-        edtEmail = findViewById(R.id.edtEmail);
-        btnOk = findViewById(R.id.btnOk);
+        tvUsername = findViewById(R.id.tvUsername);
+        tvUserEmail = findViewById(R.id.tvUserEmail);
         btnThietLap = findViewById(R.id.btnThietLap);
+        btnDangXuat = findViewById(R.id.btnDangXuat);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     public void setUserInfo() {
@@ -103,9 +111,8 @@ public class ProfileActivity extends AppCompatActivity {
                 String firstName = snapshot.child("firstName").getValue(String.class);
                 String lastName = snapshot.child("lastName").getValue(String.class);
 
-                edtFirstName.setText(firstName);
-                edtLastName.setText(lastName);
-                edtEmail.setText(email);
+                tvUsername.setText(firstName.concat(" ").concat(lastName));
+                tvUserEmail.setText(email);
                 Glide.with(ProfileActivity.this).load(user.getPhotoUrl()).error(R.drawable.no_avatar).into(img_AVT);
             }
 
@@ -120,11 +127,17 @@ public class ProfileActivity extends AppCompatActivity {
     private void initListener() {
         img_AVT.setOnClickListener(view -> onClickRequestPermission());
 
-        btnOk.setOnClickListener(view -> finish());
 
         btnThietLap.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, ListCarActivity.class);
             startActivity(intent);
+        });
+
+        btnDangXuat.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -167,9 +180,6 @@ public class ProfileActivity extends AppCompatActivity {
                 String lastName = snapshot.child("lastName").getValue(String.class);
 
                 //Log.d(TAG, "onDataChange: ");
-                edtFirstName.setText(firstName);
-                edtLastName.setText(lastName);
-                edtEmail.setText(email);
                 Glide.with(ProfileActivity.this).load(user.getPhotoUrl()).error(R.drawable.no_avatar).into(img_AVT);
             }
 

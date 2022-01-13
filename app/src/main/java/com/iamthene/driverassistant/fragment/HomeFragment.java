@@ -85,9 +85,6 @@ public class HomeFragment extends Fragment {
         civAvatar = view.findViewById(R.id.civAvatar);
         userManagerPresenter = new UserManagerPresenter();
         profile = view.findViewById(R.id.profile);
-        edtFirstName = view.findViewById(R.id.edtFirstName);
-        edtLastName = view.findViewById(R.id.edtLastName);
-        edtEmail = view.findViewById(R.id.edtEmail);
         img_AVT = view.findViewById(R.id.img_AVT);
         fabWeather = view.findViewById(R.id.fabWeather);
         fabAlarm = view.findViewById(R.id.fabAlarm);

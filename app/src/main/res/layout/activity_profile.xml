@@ -1,89 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="20dp"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.ProfileActivity">
 
-    <!-- TODO: Update blank fragment layout -->
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_AVT"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:src="@drawable/ic_person" />
-
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarOption3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="5dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/edtLastName"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_weight="5"
-            android:hint="Họ"
-            android:padding="10dp" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_back_ios"
+            app:navigationIconTint="@android:color/holo_blue_light">
 
-        <EditText
-            android:id="@+id/edtFirstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_weight="4"
-            android:hint="Tên"
-            android:padding="10dp" />
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:hint="Email"
-        android:padding="10dp" />
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TableRow>
-
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_weight="3"
-                android:hint="Danh sách xe"
-                android:padding="10dp"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:gravity="start|center"
+                android:text="Trang cá nhân"
+                android:textColor="@android:color/holo_blue_light" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <Button
-                android:id="@+id/btnThietLap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="10dp"
-                android:backgroundTint="#AD44AE77"
-                android:text="Thiết lập"
-                android:textColor="#D9DEE1" />
-        </TableRow>
-    </TableLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@android:color/holo_blue_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbarOption3"
+        app:layout_constraintVertical_bias="0.0">
 
-    <Button
-        android:id="@+id/btnOk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="#28A4AF"
-        android:text="Ok" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_AVT"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="36dp"
+            android:elevation="10dp"
+            android:src="@drawable/ic_person"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trần Nguyên Thế"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_AVT"
+            app:layout_constraintVertical_bias="0.1" />
+
+        <TextView
+            android:id="@+id/tvUserEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nguyenthe.tnt@gmail.com"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+            app:layout_constraintVertical_bias="0.1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/custom_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnThietLap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#AD44AE77"
+            android:text="Danh sách xe"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnDangXuat"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDangXuat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#AD44AE77"
+            android:text="Đăng xuất"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnThietLap"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

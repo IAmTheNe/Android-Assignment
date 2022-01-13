@@ -1,7 +1,9 @@
 package com.iamthene.driverassistant.activity;
 
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,17 +54,22 @@ public class DashboardActivity extends AppCompatActivity {
                     mCurrentFragment = FRAG_REPORT;
                 }
             } else if (id == R.id.nav_profile) {
-
-
-                progressDialog.show();
-                progressDialog.setMessage("Đang đăng xuất...");
-                SharedPreferences sharedPreferences = getSharedPreferences("DataUser", MODE_PRIVATE);
-                sharedPreferences.edit().clear().apply();
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
-                progressDialog.dismiss();
-                startActivity(intent);
-                finish();
+                new AlertDialog.Builder(this)
+                        .setTitle(getResources().getString(R.string.app_name))
+                        .setMessage("Bạn thật sự muốn đăng xuất?")
+                        .setPositiveButton("Đăng xuất", (dialog, which) -> {
+                            progressDialog.show();
+                            progressDialog.setMessage("Đang đăng xuất...");
+                            SharedPreferences sharedPreferences = getSharedPreferences("DataUser", MODE_PRIVATE);
+                            sharedPreferences.edit().clear().apply();
+                            FirebaseAuth.getInstance().signOut();
+                            Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+                            progressDialog.dismiss();
+                            startActivity(intent);
+                            finish();
+                        })
+                        .setNegativeButton("Thoát", null)
+                        .show();
             } else if (id == R.id.nav_alarm) {
                 if (mCurrentFragment != FRAG_ALARM) {
                     replaceFragment(new NotificationFragment());
