@@ -87,12 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnThietLap = findViewById(R.id.btnThietLap);
         btnDangXuat = findViewById(R.id.btnDangXuat);
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     public void setUserInfo() {

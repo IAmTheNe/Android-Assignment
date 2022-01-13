@@ -1,5 +1,6 @@
 package com.iamthene.driverassistant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.iamthene.driverassistant.R;
@@ -19,6 +21,7 @@ public class ReportFragment extends Fragment {
     TabLayout tab_layout;
     ViewPager2 viewPager2;
     ReportAdapter mReportAdapter;
+    MaterialToolbar toolbar;
 
     @Nullable
     @Override
@@ -38,6 +41,8 @@ public class ReportFragment extends Fragment {
         viewPager2 = view.findViewById(R.id.view_pager_2);
         mReportAdapter = new ReportAdapter(requireActivity());
         viewPager2.setAdapter(mReportAdapter);
+        toolbar = view.findViewById(R.id.toolbarOption3);
+        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
     }
 
     private void initTabLayout() {
