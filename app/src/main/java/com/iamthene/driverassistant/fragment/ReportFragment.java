@@ -15,6 +15,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.iamthene.driverassistant.R;
+import com.iamthene.driverassistant.activity.DashboardActivity;
 import com.iamthene.driverassistant.adapter.ReportAdapter;
 
 public class ReportFragment extends Fragment {
@@ -42,7 +43,10 @@ public class ReportFragment extends Fragment {
         mReportAdapter = new ReportAdapter(requireActivity());
         viewPager2.setAdapter(mReportAdapter);
         toolbar = view.findViewById(R.id.toolbarOption3);
-        toolbar.setNavigationOnClickListener(v -> getActivity().finish());
+        toolbar.setNavigationOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), DashboardActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initTabLayout() {
