@@ -7,6 +7,7 @@
     tools:context=".activity.RepairActivity">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -36,12 +37,43 @@
             </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <LinearLayout
+            android:id="@+id/lyEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/frlContent"
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottie"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/empty" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:letterSpacing=".1"
+                android:text="@string/empty_list"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPartChange"
+            android:layout_below="@id/appbarOption3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/appbarOption3"/>
+            android:layout_marginHorizontal="16dp"
+            android:clipToPadding="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_repair_timeline" />
     </RelativeLayout>
 
 

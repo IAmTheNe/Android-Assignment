@@ -66,4 +66,7 @@ dependencies {
     // Weather
     implementation 'com.loopj.android:android-async-http:1.4.11'
 
+    // Xuất file
+    // https://mvnrepository.com/artifact/org.apache.poi/poi
+    implementation 'org.apache.poi:poi:3.9'
 }
