@@ -32,7 +32,6 @@ public class OilFragment extends Fragment {
     OilAdapter adapter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
-    ImageButton btnAddOil;
     List<String> mKeys = new ArrayList<>();
 
     @Override

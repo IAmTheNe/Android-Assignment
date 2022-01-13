@@ -61,6 +61,7 @@ public class ExportFile {
             fos.flush();
             fos.close();
         } catch (Exception e) {
+            // Android 11 sẽ bị lỗi - Nên dùng thiết bị từ Android 10 đổ xuống
             Toast.makeText(context, "Xuất file thất bại!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }

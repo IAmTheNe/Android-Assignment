@@ -1,20 +1,18 @@
 package com.iamthene.driverassistant.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,19 +24,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.adapter.RefuelAdapter;
-import com.iamthene.driverassistant.fragment.EmptyFragment;
-import com.iamthene.driverassistant.fragment.RefuelFragment;
 import com.iamthene.driverassistant.model.Refuel;
-import com.iamthene.driverassistant.presenter.RefuelInterface;
-import com.iamthene.driverassistant.presenter.RefuelPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RefuelActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener, RefuelInterface.OnCheckEmptyList {
+public class RefuelActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
     FrameLayout frlContent;
     MaterialToolbar toolbar;
-    RefuelPresenter mPresenter;
+    RecyclerView rvRefuel;
+    List<Refuel> lstRefuel;
+    LinearLayout lyEmpty;
+    RefuelAdapter adapter;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef;
+    List<String> mKeys = new ArrayList<>();
 
 
     @Override
@@ -46,12 +46,11 @@ public class RefuelActivity extends AppCompatActivity implements Toolbar.OnMenuI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refuel);
         inIt();
-        inItEvent();
+        getData();
+        adapter = new RefuelAdapter(lstRefuel, this);
+        rvRefuel.setAdapter(adapter);
     }
 
-    private void inItEvent() {
-        mPresenter.isEmptyList();
-    }
 
     private void inIt() {
         frlContent = findViewById(R.id.frlContent);
@@ -60,7 +59,12 @@ public class RefuelActivity extends AppCompatActivity implements Toolbar.OnMenuI
         toolbar.setNavigationOnClickListener(view -> {
             finish();
         });
-        mPresenter = new RefuelPresenter(this);
+        rvRefuel = findViewById(R.id.rvRefuel);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvRefuel.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        lyEmpty = findViewById(R.id.lyEmpty);
     }
 
     @Override
@@ -73,19 +77,73 @@ public class RefuelActivity extends AppCompatActivity implements Toolbar.OnMenuI
         return false;
     }
 
-    private void replaceFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frlContent, fragment);
-        transaction.commitAllowingStateLoss();
-    }
+    private void getData() {
+        lstRefuel = new ArrayList<>();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-    @Override
-    public void empty() {
-        replaceFragment(new EmptyFragment());
-    }
+        myRef = database.getReference("Refuel");
+        assert user != null;
+        myRef.child(user.getUid()).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Refuel p = snapshot.getValue(Refuel.class);
+                if (p != null) {
+                    lstRefuel.add(p);
+                    String key = snapshot.getKey();
+                    mKeys.add(key);
+                    adapter.notifyDataSetChanged();
+                }
 
-    @Override
-    public void exists() {
-        replaceFragment(new RefuelFragment());
+                if (lstRefuel.isEmpty()) {
+                    lyEmpty.setVisibility(View.VISIBLE);
+                    rvRefuel.setVisibility(View.GONE);
+                } else {
+                    lyEmpty.setVisibility(View.GONE);
+                    rvRefuel.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Refuel p = snapshot.getValue(Refuel.class);
+                if (p == null || lstRefuel == null || lstRefuel.isEmpty()) {
+                    return;
+                }
+                int index = mKeys.indexOf(snapshot.getKey());
+                lstRefuel.set(index, p);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                Refuel p = snapshot.getValue(Refuel.class);
+                if (p == null || lstRefuel == null || lstRefuel.isEmpty()) {
+                    return;
+                }
+                int index = mKeys.indexOf(snapshot.getKey());
+                if (index != -1) {
+                    lstRefuel.remove(index);
+                    mKeys.remove(index);
+                }
+                if (lstRefuel.isEmpty()) {
+                    lyEmpty.setVisibility(View.VISIBLE);
+                    rvRefuel.setVisibility(View.GONE);
+                } else {
+                    lyEmpty.setVisibility(View.GONE);
+                    rvRefuel.setVisibility(View.VISIBLE);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
