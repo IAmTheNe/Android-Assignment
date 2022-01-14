@@ -45,6 +45,7 @@ public class AlarmPresenter {
                     dr.child("alarmDate").setValue(alarm.getAlarmDate());
                     dr.child("desc").setValue(alarm.getDesc());
                     dr.child("type").setValue(alarm.getType());
+                    dr.child("checked").setValue(alarm.isChecked());
                 }
                 addAlarmValue.addSuccess();
             }

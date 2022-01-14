@@ -2,9 +2,12 @@ package com.iamthene.driverassistant.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,12 +21,26 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.iamthene.driverassistant.R;
+import com.iamthene.driverassistant.model.Refuel;
 
 import java.util.ArrayList;
 
 public class ReportGeneralFragment extends Fragment {
     PieChart mPieChart;
+    FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    EditText etReportMoney;
+    int sum = 0;
+    int sumRefuel, sumOil, sumRepair = 0;
+
 
     @Nullable
     @Override
@@ -37,10 +54,12 @@ public class ReportGeneralFragment extends Fragment {
         inIt(view);
         setupPieChart();
         loadPieChartData();
+        getRefuelMoney();
     }
 
     private void inIt(View view) {
         mPieChart = view.findViewById(R.id.pieChart);
+        etReportMoney = view.findViewById(R.id.etReportMoney);
     }
 
     private void setupPieChart() {
@@ -92,10 +111,34 @@ public class ReportGeneralFragment extends Fragment {
     }
 
     private void getRefuelMoney() {
+        sumRefuel = 0;
+        DatabaseReference _myRef = mDatabase.getReference("Refuel");
+        if (user != null) {
+            _myRef.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Refuel r = ds.getValue(Refuel.class);
+                        if (r != null) {
+                            sumRefuel += Integer.parseInt(r.getFee());
+                        }
+                        Toast.makeText(getContext(), sumRefuel + "", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
     private void getRepairMoney() {
+        sumOil = 0;
+    }
+
+    private void getOilMoney() {
 
     }
 }
