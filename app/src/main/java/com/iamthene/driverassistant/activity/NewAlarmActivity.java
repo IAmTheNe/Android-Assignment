@@ -1,7 +1,6 @@
 package com.iamthene.driverassistant.activity;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -44,7 +43,11 @@ public class NewAlarmActivity extends AppCompatActivity implements AlarmInterfac
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(NewAlarmActivity.this, (view, year1, month1, dayOfMonth) -> {
                 month1 = month1 + 1;
-                String date = dayOfMonth + "/" + month1 + "/" + year1;
+                String mm = String.valueOf(month1);
+                if (mm.length() == 1) {
+                    mm = "0" + mm;
+                }
+                String date = dayOfMonth + "/" + mm + "/" + year1;
                 etDate.setText(date);
             }, year, month, day);
 
@@ -53,7 +56,7 @@ public class NewAlarmActivity extends AppCompatActivity implements AlarmInterfac
 
         //
         etType.setOnClickListener(v -> {
-            String[] list = {"Đổ xăng", "Thay nhớt", "Thay linh kiện"};
+            String[] list = {"Đổ xăng", "Thay nhớt", "Thay linh kiện", "Mua bảo hiểm xe"};
             final String[] type = {""};
             MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(NewAlarmActivity.this);
             alertDialogBuilder.setTitle(getResources().getText(R.string.app_name));
@@ -89,6 +92,7 @@ public class NewAlarmActivity extends AppCompatActivity implements AlarmInterfac
         alarm.setAlarmDate(etDate.getText().toString());
         alarm.setType(etType.getText().toString());
         alarm.setCreatedAt(new SimpleDateFormat("dd/MM/yyyy", new Locale("vi")).format(new Date()));
+        alarm.setChecked(false);
         mAlarmPresenter.addAlarm(alarm);
     }
 

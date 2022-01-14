@@ -20,7 +20,7 @@ import com.iamthene.driverassistant.fragment.NotificationFragment;
 import com.iamthene.driverassistant.fragment.ReportFragment;
 
 public class DashboardActivity extends AppCompatActivity {
-    BottomNavigationView mBottomNavigationView;
+    public static BottomNavigationView mBottomNavigationView;
     ProgressDialog progressDialog;
 
     private static final int FRAG_HISTORY = 0;
