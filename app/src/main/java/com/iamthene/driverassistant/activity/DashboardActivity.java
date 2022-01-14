@@ -3,7 +3,6 @@ package com.iamthene.driverassistant.activity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -68,7 +67,9 @@ public class DashboardActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         })
-                        .setNegativeButton("Thoát", null)
+                        .setNegativeButton("Thoát", (dialog, which) -> {
+                            mBottomNavigationView.setSelectedItemId(R.id.nav_history);
+                        })
                         .show();
             } else if (id == R.id.nav_alarm) {
                 if (mCurrentFragment != FRAG_ALARM) {

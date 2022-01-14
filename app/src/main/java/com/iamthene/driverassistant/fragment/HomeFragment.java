@@ -95,11 +95,6 @@ public class HomeFragment extends Fragment {
                                 .setTitle("Nhắc hẹn hôm nay")
                                 .setMessage("Hôm nay bạn có việc cần làm! Vào thông báo để xem chi tiết!")
                                 .setPositiveButton("Chuyển đến", (dialog, which) -> {
-                                    Fragment fragment = new NotificationFragment();
-                                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.frlContent, fragment);
-                                    transaction.addToBackStack(null);
-                                    transaction.commit();
                                     bottomNavigationView.setSelectedItemId(R.id.nav_alarm);
                                     String keys = snapshot.getKey();
                                     if (keys != null) {
