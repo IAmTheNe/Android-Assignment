@@ -37,6 +37,7 @@ import com.iamthene.driverassistant.activity.OilActivity;
 import com.iamthene.driverassistant.activity.ProfileActivity;
 import com.iamthene.driverassistant.activity.RefuelActivity;
 import com.iamthene.driverassistant.activity.RepairActivity;
+import com.iamthene.driverassistant.activity.SOSActivity;
 import com.iamthene.driverassistant.activity.WeatherActivity;
 import com.iamthene.driverassistant.model.Alarm;
 import com.iamthene.driverassistant.presenter.UserManagerPresenter;
@@ -52,7 +53,7 @@ public class HomeFragment extends Fragment {
     UserManagerPresenter userManagerPresenter;
     TextView tvYourName;
     ImageView civAvatar;
-    FloatingActionButton profile, fabWeather, fabAlarm, faFindGasStation;
+    FloatingActionButton profile, fabWeather, fabAlarm, faFindGasStation, fabEmergencyCall;
     BottomNavigationView bottomNavigationView = DashboardActivity.mBottomNavigationView;
     List<Alarm> lstAlarm;
     List<String> mKeys = new ArrayList<>();
@@ -163,6 +164,7 @@ public class HomeFragment extends Fragment {
         profile = view.findViewById(R.id.profile);
         fabWeather = view.findViewById(R.id.fabWeather);
         fabAlarm = view.findViewById(R.id.fabAlarm);
+        fabEmergencyCall = view.findViewById(R.id.fabEmergencyCall);
     }
 
     private void setEvent() {
@@ -200,6 +202,9 @@ public class HomeFragment extends Fragment {
             Intent intent = new Intent(getActivity(), AlarmActivity.class);
             startActivity(intent);
         });
-
+        fabEmergencyCall.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SOSActivity.class);
+            startActivity(intent);
+        });
     }
 }
