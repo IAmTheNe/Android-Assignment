@@ -42,7 +42,7 @@ public class ExportFileOil {
             cell = row.createCell(0);
             cell.setCellValue(o.getTimeOil().concat(" ").concat(o.getTimeOil()));
             cell = row.createCell(1);
-            cell.setCellValue(o.getIdOil());
+            cell.setCellValue(o.getCarName());
             cell = row.createCell(2);
             cell.setCellValue(o.getPlaceOil());
             cell = row.createCell(3);
@@ -51,7 +51,7 @@ public class ExportFileOil {
         }
 
         // Xuất file
-        File filePath = new File(Environment.getExternalStorageDirectory() + "/Thống kê sửa xe.xls");
+        File filePath = new File(Environment.getExternalStorageDirectory() + "/Thống kê thay nhớt.xls");
         try {
             if (!filePath.exists()) {
                 filePath.createNewFile();
