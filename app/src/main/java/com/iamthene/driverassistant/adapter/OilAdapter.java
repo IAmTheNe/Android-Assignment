@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.activity.DetailOilActivity;
 import com.iamthene.driverassistant.model.Oil;
@@ -48,7 +53,22 @@ public class OilAdapter extends RecyclerView.Adapter<OilAdapter.ViewHolder> {
         holder.tvTimeOil.setText(o.getTimeOil());
         holder.tvFeeOil.setText(o.getFeeOil());
         holder.tvVehicleName.setText(o.getCarName());
-        holder.item_oil.setOnClickListener(v -> onClickDetail(o));
+        holder.item_oil.setOnLongClickListener(view -> {
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Driver Assistant")
+                    .setMessage("Bạn có muốn xóa ghi chú này?")
+                    .setPositiveButton("Đồng ý", (dialog, which) -> {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("Repair");
+                            mRef.child(user.getUid()).child(o.getIdOil()).removeValue();
+                        }
+                    })
+                    .setNegativeButton("Quay lại", null)
+                    .show();
+
+            return false;
+        });
     }
 
     private void onClickDetail(Oil o) {

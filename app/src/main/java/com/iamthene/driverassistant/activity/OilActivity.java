@@ -1,6 +1,9 @@
 package com.iamthene.driverassistant.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -8,6 +11,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.adapter.OilAdapter;
 import com.iamthene.driverassistant.model.Oil;
+import com.iamthene.driverassistant.utils.ExportFile;
+import com.iamthene.driverassistant.utils.ExportFileOil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +131,20 @@ public class OilActivity extends AppCompatActivity {
             if (id == R.id.mnuAdd) {
                 Intent intent = new Intent(OilActivity.this, NewOilActivity.class);
                 startActivity(intent);
+            }
+            if (id == R.id.mnuExport) {
+                if (lstOil.isEmpty()) {
+                    new AlertDialog.Builder(this)
+                            .setTitle("Xuất file")
+                            .setMessage("Hiện tại không có dữ liệu để xuất file")
+                            .setNegativeButton("OK", null)
+                            .show();
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+                    ExportFileOil exportFileOil = new ExportFileOil();
+                    exportFileOil.exportOil(this, "Thống kê thay nhớt", lstOil);
+                }
             }
             return false;
         });

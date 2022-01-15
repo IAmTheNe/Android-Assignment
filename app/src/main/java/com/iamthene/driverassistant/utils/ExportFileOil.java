@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
-import com.iamthene.driverassistant.activity.OilActivity;
 import com.iamthene.driverassistant.model.Oil;
 import com.iamthene.driverassistant.model.Repair;
 
@@ -19,8 +18,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 
-public class ExportFile {
-    public void exportRepair(Context context, String name, List<Repair> repairs) {
+public class ExportFileOil {
+    public void exportOil(Context context, String name, List<Oil> repairs) {
         Workbook wb2003 = new HSSFWorkbook();
         String safeName = WorkbookUtil.createSafeSheetName(name);
         Sheet sheet = wb2003.createSheet(safeName);
@@ -32,22 +31,22 @@ public class ExportFile {
         cell = row.createCell(1);
         cell.setCellValue("Tên phương tiện");
         cell = row.createCell(2);
-        cell.setCellValue("Phụ tùng");
+        cell.setCellValue("Nhớt");
         cell = row.createCell(3);
         cell.setCellValue("Chi phí");
 
         // Đổ dữ liệu
         int numRow = 1;
-        for (Repair r : repairs) {
+        for (Oil o : repairs) {
             row = sheet.createRow(numRow);
             cell = row.createCell(0);
-            cell.setCellValue(r.getDate().concat(" ").concat(r.getTime()));
+            cell.setCellValue(o.getTimeOil().concat(" ").concat(o.getTimeOil()));
             cell = row.createCell(1);
-            cell.setCellValue(r.getCarId());
+            cell.setCellValue(o.getIdOil());
             cell = row.createCell(2);
-            cell.setCellValue(r.getPart());
+            cell.setCellValue(o.getPlaceOil());
             cell = row.createCell(3);
-            cell.setCellValue(r.getPrice());
+            cell.setCellValue(o.getFeeOil());
             numRow++;
         }
 
