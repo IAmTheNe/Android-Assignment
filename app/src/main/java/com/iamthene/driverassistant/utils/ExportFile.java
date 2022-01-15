@@ -4,12 +4,11 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 
-<<<<<<< HEAD
+
 import com.iamthene.driverassistant.activity.OilActivity;
 import com.iamthene.driverassistant.model.Oil;
-=======
+
 import com.iamthene.driverassistant.model.Refuel;
->>>>>>> db5ae477c732a2a5cd9dd1491bb0a3b35e343c04
 import com.iamthene.driverassistant.model.Repair;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
