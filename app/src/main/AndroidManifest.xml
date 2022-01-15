@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<<<<<<< HEAD
+=======
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+>>>>>>> db5ae477c732a2a5cd9dd1491bb0a3b35e343c04
 
     <application
         android:name=".fcm.MyApplication"
@@ -17,6 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DriverAssistant">
+        <activity
+            android:name=".activity.SOSActivity"
+            android:exported="false" />
 
         <service
             android:name=".fcm.MyFirebaseMessagingService"

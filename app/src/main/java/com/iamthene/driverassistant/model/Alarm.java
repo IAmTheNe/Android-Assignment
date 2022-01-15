@@ -9,6 +9,7 @@ public class Alarm {
     private String alarmDate;
     private String desc;
     private String type;
+    private boolean isChecked;
 
     public Alarm() {
 
@@ -60,6 +61,14 @@ public class Alarm {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public boolean isEmptyTitle() {

@@ -1,6 +1,9 @@
 package com.iamthene.driverassistant.activity;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.iamthene.driverassistant.R;
 import com.iamthene.driverassistant.adapter.RefuelAdapter;
 import com.iamthene.driverassistant.model.Refuel;
+import com.iamthene.driverassistant.utils.ExportFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +78,20 @@ public class RefuelActivity extends AppCompatActivity implements Toolbar.OnMenuI
         if (id == R.id.mnuAdd) {
             Intent intent = new Intent(this, NewRefuelActivity.class);
             startActivity(intent);
+        }
+        if (id == R.id.mnuExport) {
+            if (lstRefuel.isEmpty()) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Xuất file")
+                        .setMessage("Hiện tại không có dữ liệu để xuất file")
+                        .setNegativeButton("OK", null)
+                        .show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE}, PackageManager.PERMISSION_GRANTED);
+                ExportFile exportFile = new ExportFile();
+                exportFile.exportRefuel(this, "Thống kê các lần đổ xăng", lstRefuel);
+            }
         }
         return false;
     }
