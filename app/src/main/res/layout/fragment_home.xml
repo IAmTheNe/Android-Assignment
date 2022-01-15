@@ -323,14 +323,14 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/faFindGasStation"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_preferences"
+                    android:src="@drawable/ic_location"
                     app:backgroundTint="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Trạm xăng gần đây"
+                    android:text="Vị trí hiện tại"
                     android:textAlignment="center"
                     android:textSize="16sp" />
             </LinearLayout>

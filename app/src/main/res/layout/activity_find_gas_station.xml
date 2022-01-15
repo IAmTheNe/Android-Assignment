@@ -8,33 +8,12 @@
     android:gravity="center"
     tools:context=".activity.FindGasStationActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:hint="Location"
-        android:padding="5dp"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        app:endIconMode="clear_text">
-        <!--        app:startIconDrawable="@drawable/ic_baseline_location">-->>
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etAddress"
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <fragment
         android:id="@+id/my_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <!--    <fragment-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:id="@+id/google_map"-->
-    <!--        android:name="com.google.android.gms.maps.SupportMapFragment"/>-->
+
 
 </LinearLayout>

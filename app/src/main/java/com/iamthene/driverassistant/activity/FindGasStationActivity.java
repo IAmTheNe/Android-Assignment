@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class FindGasStationActivity extends AppCompatActivity {
-    EditText etAddress;
+
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
     GoogleMap map;
@@ -44,24 +44,6 @@ public class FindGasStationActivity extends AppCompatActivity {
         } else {
             ActivityCompat.requestPermissions(FindGasStationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
-
-        etAddress = findViewById(R.id.etAddress);
-        etAddress.setOnClickListener(view -> {
-            Geocoder geocoder = new Geocoder(FindGasStationActivity.this);
-            try {
-                List<Address> lstAddress = geocoder.getFromLocationName(etAddress.getText().toString(), 1);
-                double lat = lstAddress.get(0).getLatitude();
-                double lon = lstAddress.get(0).getLongitude();
-                String address = lstAddress.get(0).getAddressLine(0);
-                LatLng latLng = new LatLng(lat, lon);
-                MarkerOptions markerOptions = new MarkerOptions().position(latLng).title(address).snippet(lstAddress.get(0).getLocality());
-                map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));
-                map.addMarker(markerOptions);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     private void getLocation() {
